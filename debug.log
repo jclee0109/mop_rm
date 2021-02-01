@@ -1,3 +1,0 @@
-[0202/012959.384:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\ì´ì¤€ëª…\AppData\Local\AVAST Software\Browser\User Data\Crashpad\attachments\e5d9fd39-e65e-4e43-b8fb-efb51777269d: ÁöÁ¤µÈ °æ·Î¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. (0x3)
-[0202/012959.473:ERROR:process_reader_win.cc(151)] SuspendThread: ¾×¼¼½º°¡ °ÅºÎµÇ¾ú½À´Ï´Ù. (0x5)
-[0202/012959.474:ERROR:process_reader_win.cc(151)] SuspendThread: ¾×¼¼½º°¡ °ÅºÎµÇ¾ú½À´Ï´Ù. (0x5)
