@@ -1,17 +1,27 @@
 from django.db import models
 
+
 # Create your models here.
-
 class SubjectInfo(models.Model):
+    name=models.CharField(max_length=100, blank=True, null=True)
+    code=models.CharField(max_length=100, blank=True, null=True)
 
-    name=models.CharField(max_length=100)
-    code=models.CharField(max_length=100)
-    professor=models.CharField(max_length=100)
+    professor1=models.CharField(max_length=100, blank=True, null=True)
+    professor2=models.CharField(max_length=100, blank=True, null=True)
 
-    day1=models.CharField(max_length=1)
-    day2=models.CharField(max_length=1)
-    day3=models.CharField(max_length=1)
-    day4=models.CharField(max_length=1)
+    day1=models.CharField(max_length=1, blank=True, null=True)
+    day2=models.CharField(max_length=1, blank=True, null=True)
+    day3=models.CharField(max_length=1, blank=True, null=True)
+    day4=models.CharField(max_length=1, blank=True, null=True)
+
+    start_time1=models.CharField(max_length=100, blank=True, null=True)
+    start_time2=models.CharField(max_length=100, blank=True, null=True)
+    start_time3=models.CharField(max_length=100, blank=True, null=True)
+    start_time4=models.CharField(max_length=100, blank=True, null=True)
+    finish_time1=models.CharField(max_length=100, blank=True, null=True)
+    finish_time2=models.CharField(max_length=100, blank=True, null=True)
+    finish_time3=models.CharField(max_length=100, blank=True, null=True)
+    finish_time4=models.CharField(max_length=100, blank=True, null=True)
 
     start_h1=models.PositiveSmallIntegerField(blank=True, null=True)
     start_m1=models.PositiveSmallIntegerField(blank=True, null=True)
