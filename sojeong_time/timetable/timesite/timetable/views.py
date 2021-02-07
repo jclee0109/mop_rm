@@ -26,6 +26,7 @@ def add(request, subject_id):
         temp.subject_selected = temp_subject
         temp.save()
         return redirect('timetable:main')
+
 """
     if request.method == 'GET':
         for selected_subject_id in UserChoice.subject_selected_id:

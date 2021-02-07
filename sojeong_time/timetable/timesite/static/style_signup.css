@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
 }
-
 body {
   background: #f5f6f7;
 }
@@ -87,25 +86,25 @@ select:focus {
 }
 
 table {
-  border: 2px solid #d2d2d2;
   border-collapse: collapse;
-  font-size: 0.9em;
+  font-size: 0.1em;
 }
 th,
 td {
-  border: 1px solid #d2d2d2;
   border-collapse: collapse;
 }
 th {
-  height: 5px;
+  height: 20px;
+  width: 100px;
   background-color: rgb(138, 138, 138);
   color: white;
 }
 td {
   width: 100px;
-  height: 10px;
+  height: 20px;
   text-align: center;
 }
+
 #result {
   color: #f5f6f7;
   margin: 0px auto;
@@ -120,7 +119,6 @@ td {
   padding: 20px;
   background: rgb(83, 83, 85);
 }
-option:focus {
-  background: url("https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg")
-    no-repeat 97% 50%;
+#myCanvas {
+  position: absolute;
 }
