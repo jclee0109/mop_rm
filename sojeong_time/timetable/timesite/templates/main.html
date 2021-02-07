@@ -65,7 +65,7 @@
         }
 
     </style>
-    #박스 디자인 설정
+    <! 박스 디자인 설정>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
     $(function(){
@@ -100,7 +100,10 @@
           >
             <option value="none" id="invisible">Select</option>
             {% for subject in subject_list %}
-            <option value={{ subject.id }}>{{ subject.name }}  </option>
+            <option
+                    value={{ subject.id }}> {{ subject.name }}
+            </option>
+
             {% endfor %}
           </select>
         </div>
@@ -115,8 +118,13 @@
   <input class="hide" type="button" value="hide">
   <div class="subject color3"></div>
   <ul>
+    <h2>장바구니</h2>
+    {% for selected in selected_subject_list %}
+    {{ selected.subject_selected_id }}
+    {% endfor %}
+
     {% for subject in subject_list %}
-        <li>
+            <li>
           {{subject.id}} {{ subject.name }}
           <button method="get" class="btn btn-primary"> <a href="{% url 'timetable:add' subject.id %}"> ADD </a> </button>
           <button method="get" class="btn btn-primary"> <a href="{% url 'timetable:del' subject.id %}"> DEL </a> </button>

@@ -44,6 +44,8 @@ class SubjectInfo(models.Model):
     fin_h4=models.PositiveSmallIntegerField(blank=True, null=True)
     fin_m4=models.PositiveSmallIntegerField(blank=True, null=True)
 
+    count=models.PositiveSmallIntegerField(blank=True, null=True)
+
     def __str__(self):
         return self.name
 
