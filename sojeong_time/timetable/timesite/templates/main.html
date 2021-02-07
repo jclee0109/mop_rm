@@ -52,15 +52,40 @@
       function alarm(e) {}
 
     </script>
-  </head>
+     <style>
+        .color3{
+            border:1px solid gray;
+            background-color:powderblue;
+        }
+        .subject{
+            height:100px;
+            width:500px;
+            top:500px;
+            left:500px;
+        }
 
+    </style>
+    #박스 디자인 설정
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(function(){
+        $('.show').click(function (){
+            $('.subject').show();
+        });
+        $('.hide').click(function (){
+            $('.subject').hide();
+        });
+    });
+    </script>
+
+  </head>
   <body>
   {% if user.is_authenticated %}
     <a class="nav-link" href="{% url 'common:logout' %}">{{ user.username }} (로그아웃)</a>
     {% else %}
     <a href="{% url 'common:login' %}">로그인</a>
     {% endif %}
-<a href="{% url 'common:signup' %}">회원가입</a>
+  <a href="{% url 'common:signup' %}">회원가입</a>
     <div class="line">
       <div>&nbsp</div>
       <div id="login_back">
@@ -75,7 +100,7 @@
           >
             <option value="none" id="invisible">Select</option>
             {% for subject in subject_list %}
-            <option value={{ subject.id }}>{{ subject.name }}</option>
+            <option value={{ subject.id }}>{{ subject.name }}  </option>
             {% endfor %}
           </select>
         </div>
@@ -83,8 +108,20 @@
           <div id="result">장바구니<br /></div>
         </div>
       </div>
-
       <div>&nbsp</div>
     </div>
+
+  <input class="show" type="button" value="show">
+  <input class="hide" type="button" value="hide">
+  <div class="subject color3"></div>
+  <ul>
+    {% for subject in subject_list %}
+        <li>
+          {{subject.id}} {{ subject.name }}
+          <button method="get" class="btn btn-primary"> <a href="{% url 'timetable:add' subject.id %}"> ADD </a> </button>
+          <button method="get" class="btn btn-primary"> <a href="{% url 'timetable:del' subject.id %}"> DEL </a> </button>
+        </li>
+    {% endfor %}
+    </ul>
   </body>
 </html>

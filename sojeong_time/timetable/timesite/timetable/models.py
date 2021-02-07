@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 class SubjectInfo(models.Model):
+    index=models.PositiveSmallIntegerField(blank=True, null=True)
     name=models.CharField(max_length=100, default='')
     code=models.CharField(max_length=100, default='')
 
@@ -45,6 +46,11 @@ class SubjectInfo(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class UserChoice(models.Model):
+    subject_selected = models.ForeignKey(SubjectInfo, blank=True, null=True, on_delete=models.DO_NOTHING)
+
 
 
 
