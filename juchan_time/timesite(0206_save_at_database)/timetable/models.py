@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class SubjectInfo(models.Model):
@@ -43,5 +43,15 @@ class SubjectInfo(models.Model):
     finish_time3=models.CharField(max_length=100, blank=True, null=True)
     finish_time4=models.CharField(max_length=100, blank=True, null=True)
 
+    count = models.PositiveSmallIntegerField(blank=True, null=True)
+    choice = models.ManyToManyField(User, related_name='choice_subject')
+
     def __str__(self):
         return self.name
+#
+# class User_Info(models.Model):
+#     name = models.ForeignKey(User, on_delete=models.CASCADE, null = True)
+
+class Subject_add(models.Model):
+    # name = models.CharField(max_length=100)
+    subject = models.ForeignKey(SubjectInfo, on_delete=models.CASCADE)

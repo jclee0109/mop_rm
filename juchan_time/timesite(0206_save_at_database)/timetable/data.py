@@ -56,6 +56,7 @@ for i in range(len(data_pd)-1):
 
         q.fin_h1 = int(time[i][0][1][0])
         q.fin_m1 = int(time[i][0][1][1])
+        q.count = 1
 
     elif(len(day[i]) == 2):
         q.day1 = day[i][0]
@@ -72,6 +73,7 @@ for i in range(len(data_pd)-1):
         q.start_m2 = int(time[i][1][0][1])
         q.fin_h2 = int(time[i][1][1][0])
         q.fin_m2 = int(time[i][1][1][1])
+        q.count = 2
 
     elif(len(day[i]) == 3):
         q.day1 = day[i][0]
@@ -95,6 +97,7 @@ for i in range(len(data_pd)-1):
         q.start_m3 = int(time[i][2][0][1])
         q.fin_h3 = int(time[i][2][1][0])
         q.fin_m3 = int(time[i][2][1][1])
+        q.count = 3
 
     elif(len(day[i]) == 4):
         q.day1 = day[i][0]
@@ -125,5 +128,6 @@ for i in range(len(data_pd)-1):
         q.start_m4 = int(time[i][3][0][1])
         q.fin_h4 = int(time[i][3][1][0])
         q.fin_m4 = int(time[i][3][1][1])
+        q.count = 4
 
     q.save()
