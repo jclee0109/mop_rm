@@ -6,6 +6,7 @@ import re
 import pandas as pd
 import numpy
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 # ---------------------------------------------------------------------------- #
 
@@ -50,6 +51,8 @@ def mytable(request, user_id):
     page = request.GET.get('page', '1')  # 페이지
     kw = request.GET.get('kw', '')  # 검색어
     subject_list = SubjectInfo.objects.order_by('name')
+    subject_add_not_distinct = Subject_add.objects.filter(user_id=request.user.id).values().distinct('subject_add_id').order_by('subject_add_id')
+    subject_add_list = subject_add_not_distinct
     if kw:
         subject_list = subject_list.filter(
             Q(name__icontains=kw) |
@@ -59,16 +62,35 @@ def mytable(request, user_id):
     paginator = Paginator(subject_list, 10)
     page_obj = paginator.get_page(page)
 
-    context = {'subject_list': page_obj, 'page': page, 'kw': kw}
+    context = {'subject_list': page_obj, 'page': page, 'kw': kw, 'subject_add_list': subject_add_list}
     return render(request, 'timetable/main.html', context)
     # 여기서 user_id에 따라 정보가 달라져야 될 것 같아
 
 def choice_subject(request, subject_id, user_id):
     subject = get_object_or_404(SubjectInfo, pk=subject_id)
     subject.choice.add(request.user)
-    # subjects = SubjectInfo.choice_subject.all()
     return redirect('timetable:mytable', user_id=request.user.id)
 
+def add(request, subject_id):
+    """
+    과목 추가
+    """
+    if request.method == 'GET':
+        tmp = Subject_add()
+        tmp_subject = SubjectInfo.objects.get(id=subject_id)
+        tmp.subject_add = tmp_subject
+        tmp.user = request.user
+        tmp.save()
+        return redirect('timetable:mytable', user_id=request.user.id)
+
+def delete(request, subject_id):
+    """
+    과목 삭제
+    """
+    if request.method == 'GET':
+        temp = SubjectInfo.objects.get(subject_selected_id=subject_id)
+        temp.delete()
+    return redirect('timetable:main')
 
 
 def data_save(request):

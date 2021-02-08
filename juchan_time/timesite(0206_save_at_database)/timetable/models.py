@@ -54,4 +54,5 @@ class SubjectInfo(models.Model):
 
 class Subject_add(models.Model):
     # name = models.CharField(max_length=100)
-    subject = models.ForeignKey(SubjectInfo, on_delete=models.CASCADE)
+    subject_add = models.ForeignKey(SubjectInfo, blank = True, null=True, on_delete=models.CASCADE)
+    user= models.ForeignKey(User, on_delete=models.CASCADE, blank = True, null=True, related_name='user_add')
