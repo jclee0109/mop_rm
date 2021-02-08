@@ -33,38 +33,32 @@ def main(request):
     return render(request, 'timetable/main.html', context)
 
 def mytable(request, user_id):
-    # page = request.GET.get('page', '1')  # 페이지
-    # kw = request.GET.get('kw', '')  # 검색어
-    # subject_list = SubjectInfo.objects.order_by('name')
-    # if kw:
-    #     subject_list = subject_list.filter(
-    #         Q(name__icontains=kw) |
-    #         Q(professor1__icontains=kw)
-    #     )
-    #
-    # paginator = Paginator(subject_list, 10)
-    # page_obj = paginator.get_page(page)
-    #
-    # context = {'subject_list': page_obj, 'page': page, 'kw': kw}
-    # return render(request, 'timetable/main.html', context)
-    # #여기서 user_id에 따라 정보가 달라져야 될 것 같아
     page = request.GET.get('page', '1')  # 페이지
     kw = request.GET.get('kw', '')  # 검색어
-    subject_list = SubjectInfo.objects.order_by('name')
-    subject_add_not_distinct = Subject_add.objects.filter(user_id=request.user.id).values().distinct('subject_add_id').order_by('subject_add_id')
-    subject_add_list = subject_add_not_distinct
+    subject_list = SubjectInfo.objects.order_by('id')
+    subject_add_list = Subject_add.objects.filter(user_id=request.user.id).values('subject_add_id').distinct().order_by('subject_add_id')
+    subject_selected_list = []
+    for i in range(len(subject_add_list)):
+        subject_selected_list.append(SubjectInfo.objects.get(id=subject_add_list[i].get('subject_add_id')))
+        #subject_add_list는 list형태인 것 같고, i는 정수형태로 받았어.
+        #처음에 for i in subject_add_list 로 했었는데 i를 딕셔너리 형태로 받더라... 그래서 정수형으로 바꿔주고
+        #이제 subject_add_list[i]가 딕셔너리 형태로 되어있을 건데 --> { 'subject_add_id' = 188 } 이런 식으로
+        #나는 188의 값만 필요하니깐 subject_add_id를 키값으로 하는 값을 출력했어. 그게 get함수야
+        #이렇게 subject_selected_list를 만들었고, 결국 얘네를 main.html에 집어넣으면서 끝나
+
     if kw:
         subject_list = subject_list.filter(
             Q(name__icontains=kw) |
-            Q(professor1__icontains=kw)
+            Q(professor1__icontains=kw)|
+            Q(id__icontains=kw)|
+            Q(code__icontains=kw)
         )
 
     paginator = Paginator(subject_list, 10)
     page_obj = paginator.get_page(page)
 
-    context = {'subject_list': page_obj, 'page': page, 'kw': kw, 'subject_add_list': subject_add_list}
+    context = {'subject_list': page_obj, 'page': page, 'kw': kw, 'subject_selected_list': subject_selected_list}
     return render(request, 'timetable/main.html', context)
-    # 여기서 user_id에 따라 정보가 달라져야 될 것 같아
 
 def choice_subject(request, subject_id, user_id):
     subject = get_object_or_404(SubjectInfo, pk=subject_id)
@@ -77,7 +71,10 @@ def add(request, subject_id):
     """
     if request.method == 'GET':
         tmp = Subject_add()
+
         tmp_subject = SubjectInfo.objects.get(id=subject_id)
+        tmp_add = SubjectInfo.objects.get(id=subject_id)
+        tmp_add.added = True
         tmp.subject_add = tmp_subject
         tmp.user = request.user
         tmp.save()
@@ -88,9 +85,11 @@ def delete(request, subject_id):
     과목 삭제
     """
     if request.method == 'GET':
-        temp = SubjectInfo.objects.get(subject_selected_id=subject_id)
+        tmp_delete = SubjectInfo.objects.get(id=subject_id)
+        tmp_delete.added = False
+        temp = Subject_add.objects.filter(subject_add_id=subject_id, user_id = request.user.id)
         temp.delete()
-    return redirect('timetable:main')
+    return redirect('timetable:mytable', user_id=request.user.id)
 
 
 def data_save(request):

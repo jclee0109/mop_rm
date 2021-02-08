@@ -45,6 +45,7 @@ class SubjectInfo(models.Model):
 
     count = models.PositiveSmallIntegerField(blank=True, null=True)
     choice = models.ManyToManyField(User, related_name='choice_subject')
+    added = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
