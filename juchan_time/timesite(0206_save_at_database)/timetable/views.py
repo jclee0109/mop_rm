@@ -1,7 +1,8 @@
+from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import SubjectInfo,Subject_add
-from timetable.models import SubjectInfo
+from .models import SubjectInfo, Subject_add
+from django.contrib.auth.decorators import login_required
 import re
 import pandas as pd
 import numpy
@@ -32,6 +33,7 @@ def main(request):
     context = {'subject_list': page_obj, 'page': page, 'kw': kw}
     return render(request, 'timetable/main.html', context)
 
+@login_required(login_url='common:login')
 def mytable(request, user_id):
     page = request.GET.get('page', '1')  # 페이지
     kw = request.GET.get('kw', '')  # 검색어
@@ -70,13 +72,662 @@ def add(request, subject_id):
     과목 추가
     """
     if request.method == 'GET':
-        tmp = Subject_add()
         tmp_subject = SubjectInfo.objects.get(id=subject_id)
-        tmp_add = SubjectInfo.objects.get(id=subject_id)
-        tmp_add.added = True
-        tmp.subject_add = tmp_subject
-        tmp.user = request.user
-        tmp.save()
+        subject_add_list = Subject_add.objects.filter(user_id=request.user.id).values('subject_add_id').distinct()
+        subject_selected_list = []
+        for i in range(len(subject_add_list)):
+            subject_selected_list.append(SubjectInfo.objects.get(id=subject_add_list[i].get('subject_add_id')))
+        overlap = False
+        is_same_subject = False
+        for subject in subject_selected_list:
+            if tmp_subject.id == subject.id:
+                messages.error(request, '이미 같은 강의가 장바구니에 있습니다.', ['선택한 강의 -> ID:', tmp_subject.id, 'Name:', tmp_subject.name])
+                return redirect('timetable:mytable', user_id=request.user.id)
+            else:
+                continue
+        #1일짜리 강의 겹치는지 체크
+        if tmp_subject.count == 1:
+            for subject in subject_selected_list:
+                if subject.count == 1:
+                    if tmp_subject.day1 == subject.day1:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+
+                elif subject.count == 2:
+                    if tmp_subject.day1 == subject.day1:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day2:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+
+                elif subject.count == 3:
+                    if tmp_subject.day1 == subject.day1:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day2:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day3:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                elif subject.count == 4:
+                    if tmp_subject.day1 == subject.day1:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day2:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day3:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day4:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h4 * 60 + subject.fin_m4 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h4 * 60 + subject.start_m4:
+                            pass
+                        else:
+                            overlap = True
+                            break
+        # 2일짜리 강의 겹치는지 check
+        elif tmp_subject.count == 2:
+            for subject in subject_selected_list:
+                if subject.count == 1:
+                    if tmp_subject.day1 == subject.day1:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day1:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+
+                elif subject.count == 2:
+                    if tmp_subject.day1 == subject.day1:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day2:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day1:
+                        if  tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day2:
+                        if  tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                elif subject.count == 3:
+                    if tmp_subject.day1 == subject.day1:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day2:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day3:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day1:
+                        if  tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day2:
+                        if  tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day3:
+                        if  tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                elif subject.count == 4:
+                    if tmp_subject.day1 == subject.day1:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day2:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day3:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day4:
+                        if  tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h4 * 60 + subject.fin_m4 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h4 * 60 + subject.start_m4:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day1:
+                        if  tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day2:
+                        if  tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day3:
+                        if  tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day4:
+                        if  tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h4 * 60 + subject.fin_m4 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h4 * 60 + subject.start_m4:
+                            pass
+                        else:
+                            overlap = True
+                            break
+        # 3일짜리 강의가 겹치는지 체크
+        elif tmp_subject.count == 3:
+            for subject in subject_selected_list:
+                if subject.count == 1:
+                    if tmp_subject.day1 == subject.day1:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day1:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day1:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+
+                elif subject.count == 2:
+                    if tmp_subject.day1 == subject.day1:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day2:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day1:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day2:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day1:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day2:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                elif subject.count == 3:
+                    if tmp_subject.day1 == subject.day1:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day2:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day3:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day1:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day2:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day3:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day1:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day2:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day3:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                elif subject.count == 4:
+                    if tmp_subject.day1 == subject.day1:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day2:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day3:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day4:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h4 * 60 + subject.fin_m4 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h4 * 60 + subject.start_m4:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day1:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day2:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day3:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day4:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h4 * 60 + subject.fin_m4 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h4 * 60 + subject.start_m4:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day1:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day2:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day3:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day4:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h4 * 60 + subject.fin_m4 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h4 * 60 + subject.start_m4:
+                            pass
+                        else:
+                            overlap = True
+                            break
+        # 4일짜리 강의가 겹치는지 체크
+        elif tmp_subject.count == 4:
+            for subject in subject_selected_list:
+                if subject.count == 1:
+                    if tmp_subject.day1 == subject.day1:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day1:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day1:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day4 == subject.day1:
+                        if tmp_subject.start_h4 * 60 + tmp_subject.start_m4 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h4 * 60 + tmp_subject.fin_m4 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+
+                elif subject.count == 2:
+                    if tmp_subject.day1 == subject.day1:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day2:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day1:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day2:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day1:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day2:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day4 == subject.day1:
+                        if tmp_subject.start_h4 * 60 + tmp_subject.start_m4 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h4 * 60 + tmp_subject.fin_m4 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day4 == subject.day2:
+                        if tmp_subject.start_h4 * 60 + tmp_subject.start_m4 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h4 * 60 + tmp_subject.fin_m4 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                elif subject.count == 3:
+                    if tmp_subject.day1 == subject.day1:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day2:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day3:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day1:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day2:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day3:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day1:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day2:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day3:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day4 == subject.day1:
+                        if tmp_subject.start_h4 * 60 + tmp_subject.start_m4 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h4 * 60 + tmp_subject.fin_m4 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day4 == subject.day2:
+                        if tmp_subject.start_h4 * 60 + tmp_subject.start_m4 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h4 * 60 + tmp_subject.fin_m4 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day4 == subject.day3:
+                        if tmp_subject.start_h4 * 60 + tmp_subject.start_m4 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h4 * 60 + tmp_subject.fin_m4 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                elif subject.count == 4:
+                    if tmp_subject.day1 == subject.day1:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day2:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day3:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day1 == subject.day4:
+                        if tmp_subject.start_h1 * 60 + tmp_subject.start_m1 >= subject.fin_h4 * 60 + subject.fin_m4 or tmp_subject.fin_h1 * 60 + tmp_subject.fin_m1 <= subject.start_h4 * 60 + subject.start_m4:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day1:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day2:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day3:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day2 == subject.day4:
+                        if tmp_subject.start_h2 * 60 + tmp_subject.start_m2 >= subject.fin_h4 * 60 + subject.fin_m4 or tmp_subject.fin_h2 * 60 + tmp_subject.fin_m2 <= subject.start_h4 * 60 + subject.start_m4:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day1:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day2:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day3:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day3 == subject.day4:
+                        if tmp_subject.start_h3 * 60 + tmp_subject.start_m3 >= subject.fin_h4 * 60 + subject.fin_m4 or tmp_subject.fin_h3 * 60 + tmp_subject.fin_m3 <= subject.start_h4 * 60 + subject.start_m4:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day4 == subject.day1:
+                        if tmp_subject.start_h4 * 60 + tmp_subject.start_m4 >= subject.fin_h1 * 60 + subject.fin_m1 or tmp_subject.fin_h4 * 60 + tmp_subject.fin_m4 <= subject.start_h1 * 60 + subject.start_m1:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day4 == subject.day2:
+                        if tmp_subject.start_h4 * 60 + tmp_subject.start_m4 >= subject.fin_h2 * 60 + subject.fin_m2 or tmp_subject.fin_h4 * 60 + tmp_subject.fin_m4 <= subject.start_h2 * 60 + subject.start_m2:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day4 == subject.day3:
+                        if tmp_subject.start_h4 * 60 + tmp_subject.start_m4 >= subject.fin_h3 * 60 + subject.fin_m3 or tmp_subject.fin_h4 * 60 + tmp_subject.fin_m4 <= subject.start_h3 * 60 + subject.start_m3:
+                            pass
+                        else:
+                            overlap = True
+                            break
+                    if tmp_subject.day4 == subject.day4:
+                        if tmp_subject.start_h4 * 60 + tmp_subject.start_m4 >= subject.fin_h4 * 60 + subject.fin_m4 or tmp_subject.fin_h4 * 60 + tmp_subject.fin_m4 <= subject.start_h4 * 60 + subject.start_m4:
+                            pass
+                        else:
+                            overlap = True
+                            break
+
+
+        if overlap:
+            messages.error(request, '시간표가 겹칩니다!!', ['선택한 강의 -> ID:' , tmp_subject.id, 'Name:', tmp_subject.name])
+        else:
+            tmp = Subject_add()
+            tmp.subject_add = tmp_subject
+            tmp.user = request.user
+            tmp.save()
+
         return redirect('timetable:mytable', user_id=request.user.id)
 
 def delete(request, subject_id):
@@ -85,7 +736,6 @@ def delete(request, subject_id):
     """
     if request.method == 'GET':
         tmp_delete = SubjectInfo.objects.get(id=subject_id)
-        tmp_delete.added = False
         temp = Subject_add.objects.filter(subject_add_id=subject_id, user_id = request.user.id)
         temp.delete()
     return redirect('timetable:mytable', user_id=request.user.id)

@@ -221,7 +221,7 @@
 <div class="line">
     <div>&nbsp</div>
     <div id="login_back">
-        <canvas id="myCanvas" width="600" height="480" style="display:none"> </canvas>
+        <canvas id="myCanvas" width="600" height="480"> </canvas>
         <!-- canvas가 자리 차지함. 수정ㄱㄱ -->
         <table width="600" height="480" style="color: #121212">
             <tr width="10%">
@@ -437,10 +437,12 @@
                     <td class = "text-left">
                         <div>
                             {{ subject.id }}
-                            {{ subject.name }}
+                            {{ subject.name }} - {{ subject.professor1 }}
+                            {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1}}
+                            {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2}}
+                            {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3}}
+                            {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4}}
                             <button method="get" class="btn btn-outline-secondary"> <a href="{% url 'timetable:add' subject.id %}"> ADD </a> </button>
-                            <button method="get" class="btn btn-outline-secondary"> <a href="{% url 'timetable:del' subject.id %}"> DEL </a> </button>
-
                         </div>
                     </td>
                 </tr>
@@ -490,7 +492,15 @@
                 {% endif %}
             </ul>
             <!-- 페이징처리 끝 -->
-
+            {% if messages %}
+            <div>
+                {% for message in messages %}
+                <div class="alert alert-danger" role = "alert">
+                    {{ message.tags }}! {{ message.message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
             <div id="result_back">
                 <div id="result">장바구니<br /></div>
             </div>
@@ -501,7 +511,13 @@
                 <tr class="text-center">
                     <td class = "text-left">
                         <div>
-                            {{ subject.id }} {{ subject.name }} {{ subject.start_time1 }} ~ {{subject.finish_time1 }} {{ subject.professor1 }}
+                            {{ subject.id }} {{ subject.name }}
+                            {{ subject.professor1 }}
+                            {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1}}
+                            {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2}}
+                            {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3}}
+                            {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4}}
+                            <button method="get" class="btn btn-outline-secondary"> <a href="{% url 'timetable:del' subject.id %}"> DEL </a> </button>
                         </div>
                     </td>
                 </tr>
@@ -544,7 +560,10 @@ $(document).ready(function(){
             location.href = $(this).data('uri');
         }
     }); //add버튼 누르면 진짜 add할건지 물어볼거야
+
 });
+
+
 </script>
 {% endblock %}
 
