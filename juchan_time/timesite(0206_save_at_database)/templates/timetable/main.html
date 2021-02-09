@@ -118,6 +118,9 @@
         var vertical = 6;
         day1[a] = $("#subject option:selected").attr("value3");
 
+        <!--       $("#btn_add").click(function () =>{-->
+<!--         start_timeh1[a] = $("#subject option:selected").attr("value4")-->
+<!--        }-->
         start_timeh1[a] = $("#subject option:selected").attr("value4");
         start_timem1[a] = $("#subject option:selected").attr("value5");
         finish_timeh1[a] = $("#subject option:selected").attr("value6");
@@ -218,7 +221,8 @@
 <div class="line">
     <div>&nbsp</div>
     <div id="login_back">
-        <canvas id="myCanvas" width="600" height="480"> </canvas>
+        <canvas id="myCanvas" width="600" height="480" style="display:none"> </canvas>
+        <!-- canvas가 자리 차지함. 수정ㄱㄱ -->
         <table width="600" height="480" style="color: #121212">
             <tr width="10%">
                 <th id="table0_0"></th>
@@ -424,6 +428,7 @@
                     </div>
                 </div>
             </div>
+
             <table class = "table">
                 <tbody>
                 {% if subject_list %}
@@ -496,7 +501,7 @@
                 <tr class="text-center">
                     <td class = "text-left">
                         <div>
-                            {{ subject.name }} {{ subject.start_time1 }} ~ {{subject.finish_time1 }} {{ subject.professor1 }}
+                            {{ subject.id }} {{ subject.name }} {{ subject.start_time1 }} ~ {{subject.finish_time1 }} {{ subject.professor1 }}
                         </div>
                     </td>
                 </tr>

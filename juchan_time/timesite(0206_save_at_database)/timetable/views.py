@@ -71,7 +71,6 @@ def add(request, subject_id):
     """
     if request.method == 'GET':
         tmp = Subject_add()
-
         tmp_subject = SubjectInfo.objects.get(id=subject_id)
         tmp_add = SubjectInfo.objects.get(id=subject_id)
         tmp_add.added = True
