@@ -418,7 +418,16 @@
             </tr>
         </table>
         <!--테이블 생성 끝-->
-
+        <!-- checkbox -->
+        <form method="get" action="{% url 'timetable:mytable' request.user.id %}">
+            <p>Color</p>
+            <label><input type="checkbox" name="day" value="월"> 월</label>
+            <label><input type="checkbox" name="day" value="화"> 화</label>
+            <label><input type="checkbox" name="day" value="수"> 수</label>
+            <label><input type="checkbox" name="day" value="목"> 목</label>
+            <label><input type="checkbox" name="day" value="금"> 금</label>
+            <p><input type="submit" value="Submit"> <input type="reset" value="Reset"></p>
+        </form>
         <div class="container my-3">
             <div class="row justify-content-end my-3">
                 <div class="col-4 input-group">
@@ -437,7 +446,8 @@
                     <td class = "text-left">
                         <div>
                             {{ subject.id }}
-                             {{ subject.name }} - {{ subject.professor1 }}
+                            {{ subject.name }} - {{ subject.professor1 }}
+                            {{ value|linebreaks }}
                             {% if subject.count == 1 %}
                             / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
                             {% elif subject.count == 2 %}
@@ -524,7 +534,8 @@
                     <td class = "text-left">
                         <div>
                             {{ subject.id }}
-                             {{ subject.name }} - {{ subject.professor1 }}
+                            {{ subject.name }} - {{ subject.professor1 }}
+                            {{ value|linebreaks }}
                             {% if subject.count == 1 %}
                             / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
                             {% elif subject.count == 2 %}
