@@ -719,7 +719,6 @@ def add(request, subject_id):
                             overlap = True
                             break
 
-
         if overlap:
             messages.error(request, '시간표가 겹칩니다!!', ['선택한 강의 -> ID:' , tmp_subject.id, 'Name:', tmp_subject.name])
         else:
@@ -777,6 +776,28 @@ def data_save(request):
     code = []
     for i in range(1, len(data_pd)):
         code.append(data_pd[4][i])
+
+
+    # 학점정보 읽어오기
+    credit = []
+    for i in range(1, len(data_pd)):
+        credit.append(data_pd[25][i])
+
+    #개설부서
+    department = []
+    for i in range(1, len(data_pd)):
+        department.append(data_pd[3][i])
+
+    #필수여부
+    is_required = []
+    for i in range(1, len(data_pd)):
+        is_required.append(data_pd[6][i])
+
+    #교양, 전공
+    is_major = []
+    for i in range(1, len(data_pd)):
+        is_major.append(data_pd[7][i])
+
 
     for i in range(len(data_pd) - 1):
         subject = SubjectInfo(name=sub[i], code=code[i])
