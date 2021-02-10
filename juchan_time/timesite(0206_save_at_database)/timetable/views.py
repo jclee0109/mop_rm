@@ -742,13 +742,12 @@ def delete(request, subject_id):
 
 def data_save(request):
     # 엑셀파일 받기
-    Location = 'C:/Users/이주찬/Desktop/rmathing/mop_rm'
+    Location = 'C:/Users/이주찬/Desktop/rmathing/mop_rm/juchan_time/timesite(0206_save_at_database)'
     # 이거 바꿔줄 필요 있음
     File = 'Excel_Timetable.xls'
 
     data_pd = pd.read_excel('{}/{}'.format(Location, File),
                             header=None, index_col=None, names=None)
-    data_np = pd.DataFrame.to_numpy(data_pd)
     time = []
 
     # 시간정보 읽어오기
@@ -777,11 +776,10 @@ def data_save(request):
     for i in range(1, len(data_pd)):
         code.append(data_pd[4][i])
 
-
     # 학점정보 읽어오기
     credit = []
     for i in range(1, len(data_pd)):
-        credit.append(data_pd[25][i])
+        credit.append(int(data_pd[27][i]))
 
     #개설부서
     department = []
@@ -800,7 +798,7 @@ def data_save(request):
 
 
     for i in range(len(data_pd) - 1):
-        subject = SubjectInfo(name=sub[i], code=code[i])
+        subject = SubjectInfo(name=sub[i], code=code[i], credit=credit[i], department=department[i], is_required=is_required[i], is_major=is_major[i])
         if (len(prof[i]) == 1):
             subject.professor1 = prof[i][0]
         elif (len(prof[i]) == 2):

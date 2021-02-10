@@ -118,9 +118,6 @@
         var vertical = 6;
         day1[a] = $("#subject option:selected").attr("value3");
 
-        <!--       $("#btn_add").click(function () =>{-->
-<!--         start_timeh1[a] = $("#subject option:selected").attr("value4")-->
-<!--        }-->
         start_timeh1[a] = $("#subject option:selected").attr("value4");
         start_timem1[a] = $("#subject option:selected").attr("value5");
         finish_timeh1[a] = $("#subject option:selected").attr("value6");
@@ -183,6 +180,7 @@
         ctx.fillStyle = color;
         ctx.fillRect(100 * day1[a], 20 * s_time, 100, 20 * (f_time - s_time));
 
+
         if (count[a] > 1) {
           s_time = (start_timeh2[a] - 9) * 2 + start_timem2[a] / 30 + 1;
           f_time = (finish_timeh2[a] - 9) * 2 + finish_timem2[a] / 30 + 1;
@@ -223,6 +221,8 @@
     <div id="login_back">
         <canvas id="myCanvas" width="600" height="480"> </canvas>
         <!-- canvas가 자리 차지함. 수정ㄱㄱ -->
+
+
         <table width="600" height="480" style="color: #121212">
             <tr width="10%">
                 <th id="table0_0"></th>
@@ -436,12 +436,13 @@
                 <tr class="text-center">
                     <td class = "text-left">
                         <div>
+
                             {{ subject.id }}
                             {{ subject.name }} - {{ subject.professor1 }}
-                            {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1}}
-                            {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2}}
-                            {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3}}
-                            {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4}}
+                            {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                            {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                            {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
+                            {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4 }}
                             <button method="get" class="btn btn-outline-secondary"> <a href="{% url 'timetable:add' subject.id %}"> ADD </a> </button>
                         </div>
                     </td>

@@ -44,11 +44,10 @@ class SubjectInfo(models.Model):
     finish_time4=models.CharField(max_length=100, blank=True, null=True)
 
     count = models.PositiveSmallIntegerField(blank=True, null=True)
-    choice = models.ManyToManyField(User, related_name='choice_subject')
-    added = models.BooleanField(default=False)
-
     credit = models.PositiveSmallIntegerField(blank=True, null=True)
     department = models.CharField(max_length=100, blank=True, null=True)
+    is_required = models.CharField(max_length=100, blank=True, null=True)
+    is_major = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.name
