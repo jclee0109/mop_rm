@@ -436,13 +436,24 @@
                 <tr class="text-center">
                     <td class = "text-left">
                         <div>
-
                             {{ subject.id }}
-                            {{ subject.name }} - {{ subject.professor1 }}
-                            {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
-                            {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
-                            {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
-                            {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4 }}
+                             {{ subject.name }} - {{ subject.professor1 }}
+                            {% if subject.count == 1 %}
+                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                            {% elif subject.count == 2 %}
+                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                            {% elif subject.count == 3 %}
+                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                            / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
+                            {% elif subject.count == 4 %}
+                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                            / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
+                            / {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4 }}
+                            {% endif %}
+                            / {{ subject.credit }} 학점
                             <button method="get" class="btn btn-outline-secondary"> <a href="{% url 'timetable:add' subject.id %}"> ADD </a> </button>
                         </div>
                     </td>
@@ -512,12 +523,24 @@
                 <tr class="text-center">
                     <td class = "text-left">
                         <div>
-                            {{ subject.id }} {{ subject.name }}
-                            {{ subject.professor1 }}
-                            {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1}}
-                            {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2}}
-                            {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3}}
-                            {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4}}
+                            {{ subject.id }}
+                             {{ subject.name }} - {{ subject.professor1 }}
+                            {% if subject.count == 1 %}
+                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                            {% elif subject.count == 2 %}
+                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                            {% elif subject.count == 3 %}
+                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                            / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
+                            {% elif subject.count == 4 %}
+                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                            / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
+                            / {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4 }}
+                            {% endif %}
+                            / {{ subject.credit }} 학점
                             <button method="get" class="btn btn-outline-secondary"> <a href="{% url 'timetable:del' subject.id %}"> DEL </a> </button>
                         </div>
                     </td>

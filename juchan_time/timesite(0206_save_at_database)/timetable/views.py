@@ -740,154 +740,154 @@ def delete(request, subject_id):
     return redirect('timetable:mytable', user_id=request.user.id)
 
 
-def data_save(request):
-    # 엑셀파일 받기
-    Location = 'C:/Users/이주찬/Desktop/rmathing/mop_rm/juchan_time/timesite(0206_save_at_database)'
-    # 이거 바꿔줄 필요 있음
-    File = 'Excel_Timetable.xls'
-
-    data_pd = pd.read_excel('{}/{}'.format(Location, File),
-                            header=None, index_col=None, names=None)
-    time = []
-
-    # 시간정보 읽어오기
-    for i in range(1, len(data_pd)):
-        time.append(re.findall("\d+", str(data_pd[11][i])))
-    for i in range(len(time)):
-        time[i] = numpy.array(time[i]).reshape(len(time[i]) // 4, 2, 2)
-
-    # 요일정보 읽어오기
-    day = []
-    for i in range(1, len(data_pd)):
-        day.append(re.compile("[가-힣]+").findall(str(data_pd[11][i])))
-
-    # 교수님정보 읽어오기
-    prof = []
-    for i in range(1, len(data_pd)):
-        prof.append(re.compile("[가-힣]+").findall(str(data_pd[8][i])))
-
-    # 과목명 읽어오기
-    sub = []
-    for i in range(1, len(data_pd)):
-        sub.append(data_pd[5][i])
-
-    # 과목코드 읽어오기
-    code = []
-    for i in range(1, len(data_pd)):
-        code.append(data_pd[4][i])
-
-    # 학점정보 읽어오기
-    credit = []
-    for i in range(1, len(data_pd)):
-        credit.append(int(data_pd[27][i]))
-
-    #개설부서
-    department = []
-    for i in range(1, len(data_pd)):
-        department.append(data_pd[3][i])
-
-    #필수여부
-    is_required = []
-    for i in range(1, len(data_pd)):
-        is_required.append(data_pd[6][i])
-
-    #교양, 전공
-    is_major = []
-    for i in range(1, len(data_pd)):
-        is_major.append(data_pd[7][i])
-
-
-    for i in range(len(data_pd) - 1):
-        subject = SubjectInfo(name=sub[i], code=code[i], credit=credit[i], department=department[i], is_required=is_required[i], is_major=is_major[i])
-        if (len(prof[i]) == 1):
-            subject.professor1 = prof[i][0]
-        elif (len(prof[i]) == 2):
-            subject.professor1 = prof[i][0]
-            subject.professor2 = prof[i][1]
-
-        if (len(day[i]) == 1):
-            subject.day1 = day[i][0]
-            subject.start_time1 = time[i][0][0][0] + ":" + time[i][0][0][1]
-            subject.finish_time1 = time[i][0][1][0] + ":" + time[i][0][1][1]
-            subject.start_h1 = int(time[i][0][0][0])
-            subject.start_m1 = int(time[i][0][0][1])
-
-            subject.fin_h1 = int(time[i][0][1][0])
-            subject.fin_m1 = int(time[i][0][1][1])
-            subject.count = 1
-
-        elif (len(day[i]) == 2):
-            subject.day1 = day[i][0]
-            subject.day2 = day[i][1]
-            subject.start_time1 = time[i][0][0][0] + ":" + time[i][0][0][1]
-            subject.start_time2 = time[i][1][0][0] + ":" + time[i][1][0][1]
-            subject.finish_time1 = time[i][0][1][0] + ":" + time[i][0][1][1]
-            subject.finish_time2 = time[i][1][1][0] + ":" + time[i][1][1][1]
-            subject.start_h1 = int(time[i][0][0][0])
-            subject.start_m1 = int(time[i][0][0][1])
-            subject.fin_h1 = int(time[i][0][1][0])
-            subject.fin_m1 = int(time[i][0][1][1])
-            subject.start_h2 = int(time[i][1][0][0])
-            subject.start_m2 = int(time[i][1][0][1])
-            subject.fin_h2 = int(time[i][1][1][0])
-            subject.fin_m2 = int(time[i][1][1][1])
-            subject.count = 2
-
-        elif (len(day[i]) == 3):
-            subject.day1 = day[i][0]
-            subject.day2 = day[i][1]
-            subject.day3 = day[i][2]
-            subject.start_time1 = time[i][0][0][0] + ":" + time[i][0][0][1]
-            subject.start_time2 = time[i][1][0][0] + ":" + time[i][1][0][1]
-            subject.start_time3 = time[i][2][0][0] + ":" + time[i][2][0][1]
-            subject.finish_time1 = time[i][0][1][0] + ":" + time[i][0][1][1]
-            subject.finish_time2 = time[i][1][1][0] + ":" + time[i][1][1][1]
-            subject.finish_time3 = time[i][2][1][0] + ":" + time[i][2][1][1]
-            subject.start_h1 = int(time[i][0][0][0])
-            subject.start_m1 = int(time[i][0][0][1])
-            subject.fin_h1 = int(time[i][0][1][0])
-            subject.fin_m1 = int(time[i][0][1][1])
-            subject.start_h2 = int(time[i][1][0][0])
-            subject.start_m2 = int(time[i][1][0][1])
-            subject.fin_h2 = int(time[i][1][1][0])
-            subject.fin_m2 = int(time[i][1][1][1])
-            subject.start_h3 = int(time[i][2][0][0])
-            subject.start_m3 = int(time[i][2][0][1])
-            subject.fin_h3 = int(time[i][2][1][0])
-            subject.fin_m3 = int(time[i][2][1][1])
-            subject.count = 3
-
-        elif (len(day[i]) == 4):
-            subject.day1 = day[i][0]
-            subject.day2 = day[i][1]
-            subject.day3 = day[i][2]
-            subject.day4 = day[i][3]
-            subject.start_time1 = time[i][0][0][0] + ":" + time[i][0][0][1]
-            subject.start_time2 = time[i][1][0][0] + ":" + time[i][1][0][1]
-            subject.start_time3 = time[i][2][0][0] + ":" + time[i][2][0][1]
-            subject.start_time4 = time[i][3][0][0] + ":" + time[i][3][0][1]
-            subject.finish_time1 = time[i][0][1][0] + ":" + time[i][0][1][1]
-            subject.finish_time2 = time[i][1][1][0] + ":" + time[i][1][1][1]
-            subject.finish_time3 = time[i][2][1][0] + ":" + time[i][2][1][1]
-            subject.finish_time4 = time[i][3][1][0] + ":" + time[i][3][1][1]
-            subject.start_h1 = int(time[i][0][0][0])
-            subject.start_m1 = int(time[i][0][0][1])
-            subject.fin_h1 = int(time[i][0][1][0])
-            subject.fin_m1 = int(time[i][0][1][1])
-            subject.start_h2 = int(time[i][1][0][0])
-            subject.start_m2 = int(time[i][1][0][1])
-            subject.fin_h2 = int(time[i][1][1][0])
-            subject.fin_m2 = int(time[i][1][1][1])
-            subject.start_h3 = int(time[i][2][0][0])
-            subject.start_m3 = int(time[i][2][0][1])
-            subject.fin_h3 = int(time[i][2][1][0])
-            subject.fin_m3 = int(time[i][2][1][1])
-            subject.start_h4 = int(time[i][3][0][0])
-            subject.start_m4 = int(time[i][3][0][1])
-            subject.fin_h4 = int(time[i][3][1][0])
-            subject.fin_m4 = int(time[i][3][1][1])
-            subject.count = 4
-        subject.save()
-
-    return render(request, 'timetable/main.html')
+# def data_save(request):
+#     # 엑셀파일 받기
+#     Location = 'C:/Users/이주찬/Desktop/rmathing/mop_rm/juchan_time/timesite(0206_save_at_database)'
+#     # 이거 바꿔줄 필요 있음
+#     File = 'Excel_Timetable.xls'
+#
+#     data_pd = pd.read_excel('{}/{}'.format(Location, File),
+#                             header=None, index_col=None, names=None)
+#     time = []
+#
+#     # 시간정보 읽어오기
+#     for i in range(1, len(data_pd)):
+#         time.append(re.findall("\d+", str(data_pd[11][i])))
+#     for i in range(len(time)):
+#         time[i] = numpy.array(time[i]).reshape(len(time[i]) // 4, 2, 2)
+#
+#     # 요일정보 읽어오기
+#     day = []
+#     for i in range(1, len(data_pd)):
+#         day.append(re.compile("[가-힣]+").findall(str(data_pd[11][i])))
+#
+#     # 교수님정보 읽어오기
+#     prof = []
+#     for i in range(1, len(data_pd)):
+#         prof.append(re.compile("[가-힣]+").findall(str(data_pd[8][i])))
+#
+#     # 과목명 읽어오기
+#     sub = []
+#     for i in range(1, len(data_pd)):
+#         sub.append(data_pd[5][i])
+#
+#     # 과목코드 읽어오기
+#     code = []
+#     for i in range(1, len(data_pd)):
+#         code.append(data_pd[4][i])
+#
+#     # 학점정보 읽어오기
+#     credit = []
+#     for i in range(1, len(data_pd)):
+#         credit.append(int(data_pd[27][i]))
+#
+#     #개설부서
+#     department = []
+#     for i in range(1, len(data_pd)):
+#         department.append(data_pd[3][i])
+#
+#     #필수여부
+#     is_required = []
+#     for i in range(1, len(data_pd)):
+#         is_required.append(data_pd[6][i])
+#
+#     #교양, 전공
+#     is_major = []
+#     for i in range(1, len(data_pd)):
+#         is_major.append(data_pd[7][i])
+#
+#
+#     for i in range(len(data_pd) - 1):
+#         subject = SubjectInfo(name=sub[i], code=code[i], credit=credit[i], department=department[i], is_required=is_required[i], is_major=is_major[i])
+#         if (len(prof[i]) == 1):
+#             subject.professor1 = prof[i][0]
+#         elif (len(prof[i]) == 2):
+#             subject.professor1 = prof[i][0]
+#             subject.professor2 = prof[i][1]
+#
+#         if (len(day[i]) == 1):
+#             subject.day1 = day[i][0]
+#             subject.start_time1 = time[i][0][0][0] + ":" + time[i][0][0][1]
+#             subject.finish_time1 = time[i][0][1][0] + ":" + time[i][0][1][1]
+#             subject.start_h1 = int(time[i][0][0][0])
+#             subject.start_m1 = int(time[i][0][0][1])
+#
+#             subject.fin_h1 = int(time[i][0][1][0])
+#             subject.fin_m1 = int(time[i][0][1][1])
+#             subject.count = 1
+#
+#         elif (len(day[i]) == 2):
+#             subject.day1 = day[i][0]
+#             subject.day2 = day[i][1]
+#             subject.start_time1 = time[i][0][0][0] + ":" + time[i][0][0][1]
+#             subject.start_time2 = time[i][1][0][0] + ":" + time[i][1][0][1]
+#             subject.finish_time1 = time[i][0][1][0] + ":" + time[i][0][1][1]
+#             subject.finish_time2 = time[i][1][1][0] + ":" + time[i][1][1][1]
+#             subject.start_h1 = int(time[i][0][0][0])
+#             subject.start_m1 = int(time[i][0][0][1])
+#             subject.fin_h1 = int(time[i][0][1][0])
+#             subject.fin_m1 = int(time[i][0][1][1])
+#             subject.start_h2 = int(time[i][1][0][0])
+#             subject.start_m2 = int(time[i][1][0][1])
+#             subject.fin_h2 = int(time[i][1][1][0])
+#             subject.fin_m2 = int(time[i][1][1][1])
+#             subject.count = 2
+#
+#         elif (len(day[i]) == 3):
+#             subject.day1 = day[i][0]
+#             subject.day2 = day[i][1]
+#             subject.day3 = day[i][2]
+#             subject.start_time1 = time[i][0][0][0] + ":" + time[i][0][0][1]
+#             subject.start_time2 = time[i][1][0][0] + ":" + time[i][1][0][1]
+#             subject.start_time3 = time[i][2][0][0] + ":" + time[i][2][0][1]
+#             subject.finish_time1 = time[i][0][1][0] + ":" + time[i][0][1][1]
+#             subject.finish_time2 = time[i][1][1][0] + ":" + time[i][1][1][1]
+#             subject.finish_time3 = time[i][2][1][0] + ":" + time[i][2][1][1]
+#             subject.start_h1 = int(time[i][0][0][0])
+#             subject.start_m1 = int(time[i][0][0][1])
+#             subject.fin_h1 = int(time[i][0][1][0])
+#             subject.fin_m1 = int(time[i][0][1][1])
+#             subject.start_h2 = int(time[i][1][0][0])
+#             subject.start_m2 = int(time[i][1][0][1])
+#             subject.fin_h2 = int(time[i][1][1][0])
+#             subject.fin_m2 = int(time[i][1][1][1])
+#             subject.start_h3 = int(time[i][2][0][0])
+#             subject.start_m3 = int(time[i][2][0][1])
+#             subject.fin_h3 = int(time[i][2][1][0])
+#             subject.fin_m3 = int(time[i][2][1][1])
+#             subject.count = 3
+#
+#         elif (len(day[i]) == 4):
+#             subject.day1 = day[i][0]
+#             subject.day2 = day[i][1]
+#             subject.day3 = day[i][2]
+#             subject.day4 = day[i][3]
+#             subject.start_time1 = time[i][0][0][0] + ":" + time[i][0][0][1]
+#             subject.start_time2 = time[i][1][0][0] + ":" + time[i][1][0][1]
+#             subject.start_time3 = time[i][2][0][0] + ":" + time[i][2][0][1]
+#             subject.start_time4 = time[i][3][0][0] + ":" + time[i][3][0][1]
+#             subject.finish_time1 = time[i][0][1][0] + ":" + time[i][0][1][1]
+#             subject.finish_time2 = time[i][1][1][0] + ":" + time[i][1][1][1]
+#             subject.finish_time3 = time[i][2][1][0] + ":" + time[i][2][1][1]
+#             subject.finish_time4 = time[i][3][1][0] + ":" + time[i][3][1][1]
+#             subject.start_h1 = int(time[i][0][0][0])
+#             subject.start_m1 = int(time[i][0][0][1])
+#             subject.fin_h1 = int(time[i][0][1][0])
+#             subject.fin_m1 = int(time[i][0][1][1])
+#             subject.start_h2 = int(time[i][1][0][0])
+#             subject.start_m2 = int(time[i][1][0][1])
+#             subject.fin_h2 = int(time[i][1][1][0])
+#             subject.fin_m2 = int(time[i][1][1][1])
+#             subject.start_h3 = int(time[i][2][0][0])
+#             subject.start_m3 = int(time[i][2][0][1])
+#             subject.fin_h3 = int(time[i][2][1][0])
+#             subject.fin_m3 = int(time[i][2][1][1])
+#             subject.start_h4 = int(time[i][3][0][0])
+#             subject.start_m4 = int(time[i][3][0][1])
+#             subject.fin_h4 = int(time[i][3][1][0])
+#             subject.fin_m4 = int(time[i][3][1][1])
+#             subject.count = 4
+#         subject.save()
+#
+#     return render(request, 'timetable/main.html')
 

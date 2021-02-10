@@ -23,5 +23,4 @@ urlpatterns = [
     path('timetable/', include('timetable.urls')),
     path('common/', include('common.urls')),
     path('', views.main),
-    path('data/', views.data_save),
 ]

@@ -10,5 +10,5 @@ urlpatterns = [
     path('add/<int:subject_id>', views.add, name='add'),
     path('del/<int:subject_id>', views.delete, name='del'),
     # path('choice/add/<int:subject_id>/', views.subject_add, name='subject_add'),
-    path('data/',views.data_save, name = 'data_save'),
+    # path('data/',views.data_save, name = 'data_save'),
 ]
