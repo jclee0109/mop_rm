@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('timetable/', include('timetable.urls')),
     path('common/', include('common.urls')),
-    path('', views.main),
+    path('', views.index),
 ]

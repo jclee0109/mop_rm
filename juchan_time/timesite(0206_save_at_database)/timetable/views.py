@@ -8,11 +8,26 @@ import pandas as pd
 import numpy
 from django.db.models import Q
 from django.contrib.auth.models import User
+from django.http import HttpResponse
+
 
 # ---------------------------------------------------------------------------- #
 
 def index(request):
-    return render(request, 'timetable/color.html')
+    page = request.GET.get('page', '1')  # 페이지
+    kw = request.GET.get('kw', '')  # 검색어
+    subject_list = SubjectInfo.objects.order_by('name')
+    if kw:
+        subject_list = subject_list.filter(
+            Q(name__icontains=kw) |
+            Q(professor1__icontains=kw)
+        )
+
+    paginator = Paginator(subject_list, 10)
+    page_obj = paginator.get_page(page)
+
+    context = {'subject_list': page_obj, 'page': page, 'kw': kw}
+    return render(request, 'timetable/index.html', context)
 
 def main(request):
     """
@@ -40,6 +55,7 @@ def mytable(request, user_id):
     subject_list = SubjectInfo.objects.order_by('id')
     subject_add_list = Subject_add.objects.filter(user_id=request.user.id).values('subject_add_id').distinct().order_by('subject_add_id')
     subject_selected_list = []
+    sum = 0
     for i in range(len(subject_add_list)):
         subject_selected_list.append(SubjectInfo.objects.get(id=subject_add_list[i].get('subject_add_id')))
         #subject_add_list는 list형태인 것 같고, i는 정수형태로 받았어.
@@ -47,6 +63,9 @@ def mytable(request, user_id):
         #이제 subject_add_list[i]가 딕셔너리 형태로 되어있을 건데 --> { 'subject_add_id' = 188 } 이런 식으로
         #나는 188의 값만 필요하니깐 subject_add_id를 키값으로 하는 값을 출력했어. 그게 get함수야
         #이렇게 subject_selected_list를 만들었고, 결국 얘네를 main.html에 집어넣으면서 끝나
+
+    for i in range(len(subject_selected_list)):
+        sum += subject_selected_list[i].credit
 
     if kw:
         subject_list = subject_list.filter(
@@ -59,7 +78,9 @@ def mytable(request, user_id):
     paginator = Paginator(subject_list, 10)
     page_obj = paginator.get_page(page)
 
-    context = {'subject_list': page_obj, 'page': page, 'kw': kw, 'subject_selected_list': subject_selected_list}
+
+    context = {'subject_list': page_obj, 'page': page, 'kw': kw, 'subject_selected_list': subject_selected_list,
+               'sum':sum}
     return render(request, 'timetable/main.html', context)
 
 def choice_subject(request, subject_id, user_id):
