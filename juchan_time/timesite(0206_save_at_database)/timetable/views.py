@@ -33,7 +33,7 @@ def index(request):
     page_obj = paginator.get_page(page)
 
     context = {'subject_list': page_obj, 'page': page, 'kw': kw}
-    return render(request, 'timetable/index.html', context)
+    return redirect('timetable:mytable', user_id = request.user.id)
 
 def main(request):
     """
@@ -96,8 +96,6 @@ def is_valid_queryparam(param):
 
 @login_required(login_url='common:login')
 def mytable(request, user_id):
-    page = request.GET.get('page', '1')  # 페이지
-    kw = request.GET.get('kw', '')  # 검색어
     name = request.GET.get('name') # 과목이름
     professor = request.GET.get('professor')
     id = request.GET.get('id') # 과목ID
@@ -105,7 +103,6 @@ def mytable(request, user_id):
     day = request.GET.get('day') # 요일
     time = request.GET.get('time') # 시간
     department = request.GET.get('department') # 부서
-    subject_list = SubjectInfo.objects.order_by('id')
     subject_add_list = Subject_add.objects.filter(user_id=request.user.id).values('subject_add_id').distinct().order_by('subject_add_id')
     subject_selected_list = []
     sum = 0
@@ -157,19 +154,9 @@ def mytable(request, user_id):
     if is_valid_queryparam(department):
         qs = qs.filter(department=department)
 
-    if kw:
-        subject_list = subject_list.filter(
-            Q(name__icontains=kw) |
-            Q(professor1__icontains=kw)|
-            Q(id__icontains=kw)|
-            Q(code__icontains=kw)
-        )
-
-    paginator = Paginator(qs, 10)
-    page_obj = paginator.get_page(page)
 
 
-    context = {'subject_list': page_obj, 'page': page, 'kw': kw, 'subject_selected_list': subject_selected_list,
+    context = {'subject_list': qs, 'subject_selected_list': subject_selected_list,
                'sum':sum}
     return render(request, 'timetable/main.html', context)
 

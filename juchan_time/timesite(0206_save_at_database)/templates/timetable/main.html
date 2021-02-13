@@ -107,11 +107,8 @@
 
         f_time = (finish_timeh1 - 9) * 2 + finish_timem1 / 30 + 1;
 
-
         ctx.fillStyle = color;
         ctx.fillRect(100 * day1, 20 * s_time, 100, 20 * (f_time - s_time));
-
-
 
         {
           s_time = (start_timeh2 - 9) * 2 + start_timem2 / 30 + 1;
@@ -147,113 +144,6 @@
 <a href="{% url 'common:login' %}">로그인</a>
 <a href="{% url 'common:signup' %}">회원가입</a>
 {% endif %}
-<div class="container my-3">
-    <div class="row justify-content-end my-3">
-        <div class="col-4 input-group">
-            <div class="form-group">
-                <form method="get" action="{% url 'timetable:mytable' request.user.id %}">
-                    <div class="form-row">
-                        <div class="form-group col-12">
-                            <div class="input-group">
-                                <input class="form-control py-2 border-right-0 border" type="search" name="name" placeholder="Subject name contains..." />
-                                <span class="input-group-append">
-                        <div class="input-group-text bg-transparent">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-12">
-                            <div class="input-group">
-                                <input class="form-control py-2 border-right-0 border" type="search" name="professor" placeholder="Professor name..." />
-                                <span class="input-group-append">
-                        <div class="input-group-text bg-transparent">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-12">
-                            <div class="input-group">
-                                <input class="form-control py-2 border-right-0 border" type="search" name="id" placeholder="Subject id(ex : 1, 7, 124 ...)" />
-                                <span class="input-group-append">
-                        <div class="input-group-text bg-transparent">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-12">
-                            <div class="input-group">
-                                <input class="form-control py-2 border-right-0 border" type="search" name="code" placeholder="Subject code(ex : GS1001, GS1002 ...)" />
-                                <span class="input-group-append">
-                        <div class="input-group-text bg-transparent">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </span>
-                            </div>
-                        </div>
-                    </div>
-                    <select id= "department" name = "department" >
-                        <option disabled selected value>---select department----</option>
-                        <option value="생명과학전공">생명과학전공</option>
-                        <option value="화학전공">화학전공</option>
-                        <option value="전기전자컴퓨터전공">전기전자컴퓨터전공</option>
-                        <option value="문화기술 부전공">문화기술 부전공</option>
-                        <option value="지구환경공학전공">지구환경공학전공</option>
-                        <option value="에너지부전공">에너지부전공</option>
-                        <option value="기초교육학부">기초교육학부</option>
-                        <option value="지능로봇 부전공">지능로봇 부전공</option>
-                        <option value="신소재공학전공">신소재공학전공</option>
-                        <option value="기계공학전공">기계공학전공</option>
-                        <option value="의생명공학 부전공">의생명공학 부전공</option>
-                        <option value="수학부전공">수학부전공</option>
-                        <option value="물리전공">물리전공</option>
-                        <option value="대학공통">대학공통</option>
-                    </select>
-                    <select id= "day" name = "day" >
-                        <option disabled selected value>---select day----</option>
-                        <option value="월">월</option>
-                        <option value="화">화</option>
-                        <option value="수">수</option>
-                        <option value="목">목</option>
-                        <option value="금">금</option>
-                    </select>
-                    <select id= "time" name = "time" >
-                        <option disabled selected value>---select time----</option>
-                        <option value="9:00">9:00~10:30</option>
-                        <option value="10:30">10:30~12:00</option>
-                        <option value="13:00">13:00~14:30</option>
-                        <option value="14:30">14:30~16:00</option>
-                        <option value="16:00">16:00~17:30</option>
-                    </select>
-                    <!--                    <input  type = "submit" value="Submit">-->
-                    <!--                    <p>요일을 선택하세요</p>-->
-                    <!--                    <label><input type="checkbox" name="day1" value="월" class="form-control kw" > 월</label>-->
-                    <!--                    <label><input type="checkbox" name="day2" value="화" class="form-control kw" > 화</label>-->
-                    <!--                    <label><input type="checkbox" name="day3" value="수" class="form-control kw"> 수</label>-->
-                    <!--                    <label><input type="checkbox" name="day4" value="목" class="form-control kw"> 목</label>-->
-                    <!--                    <label><input type="checkbox" name="day5" value="금" class="form-control kw"> 금</label>-->
-                    <!--                    <p>시간을 선택하세요</p>-->
-                    <!--                    <label><input type="checkbox" name="time1" value="9:00~10:30" class="form-control kw"> 9:00~10:30</label>-->
-                    <!--                    <label><input type="checkbox" name="time2" value="10:30~12:00" class="form-control kw"> 10:30~12:00</label>-->
-                    <!--                    <label><input type="checkbox" name="time3" value="13:00~14:30" class="form-control kw"> 13:00~14:30</label>-->
-                    <!--                    <label><input type="checkbox" name="time4" value="14:30~16:00" class="form-control kw"> 14:30~16:00</label>-->
-                    <!--                    <label><input type="checkbox" name="time5" value="16:00~17:30" class="form-control kw"> 16:00~17:30</label>-->
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" id="btn_search" type="submit">찾기</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 <!--테이블 생성-->
 <div class="line">
     <div>&nbsp</div>
@@ -438,28 +328,113 @@
         </table>
         <!--테이블 생성 끝-->
         총{{ sum }}  학점
-        <!-- checkbox -->
+<       <!-- 필터기능 시작-->
+        <div class="container my-3">
+            <div class="row justify-content-end my-3">
+                <div class="col-4 input-group">
+                    <div class="form-group">
+                        <form method="get" action="{% url 'timetable:mytable' request.user.id %}">
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <div class="input-group">
+                                        <input class="form-control py-2 border-right-0 border" type="search" name="name" placeholder="Subject name contains..." />
+                                        <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                                    </div>
+                                </div>
+                            </div>
+<!--                            과목이름 입력끝-->
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <div class="input-group">
+                                        <input class="form-control py-2 border-right-0 border" type="search" name="professor" placeholder="Professor name..." />
+                                        <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <div class="input-group">
+                                        <input class="form-control py-2 border-right-0 border" type="search" name="id" placeholder="Subject id(ex : 1, 7, 124 ...)" />
+                                        <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <div class="input-group">
+                                        <input class="form-control py-2 border-right-0 border" type="search" name="code" placeholder="Subject code(ex : GS1001, GS1002 ...)" />
+                                        <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <select id= "department" name = "department" >
+                                <option disabled selected value>---select department----</option>
+                                <option value="생명과학전공">생명과학전공</option>
+                                <option value="화학전공">화학전공</option>
+                                <option value="전기전자컴퓨터전공">전기전자컴퓨터전공</option>
+                                <option value="문화기술 부전공">문화기술 부전공</option>
+                                <option value="지구환경공학전공">지구환경공학전공</option>
+                                <option value="에너지부전공">에너지부전공</option>
+                                <option value="기초교육학부">기초교육학부</option>
+                                <option value="지능로봇 부전공">지능로봇 부전공</option>
+                                <option value="신소재공학전공">신소재공학전공</option>
+                                <option value="기계공학전공">기계공학전공</option>
+                                <option value="의생명공학 부전공">의생명공학 부전공</option>
+                                <option value="수학부전공">수학부전공</option>
+                                <option value="물리전공">물리전공</option>
+                                <option value="대학공통">대학공통</option>
+                            </select>
+                            <select id= "day" name = "day" >
+                                <option disabled selected value>---select day----</option>
+                                <option value="월">월</option>
+                                <option value="화">화</option>
+                                <option value="수">수</option>
+                                <option value="목">목</option>
+                                <option value="금">금</option>
+                            </select>
+                            <select id= "time" name = "time" >
+                                <option disabled selected value>---select time----</option>
+                                <option value="9:00">9:00~10:30</option>
+                                <option value="10:30">10:30~12:00</option>
+                                <option value="13:00">13:00~14:30</option>
+                                <option value="14:30">14:30~16:00</option>
+                                <option value="16:00">16:00~17:30</option>
+                            </select>
+
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" id="btn_search" type="submit">찾기</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class ="container my-3">
             {% if messages %}
             <div>
                 {% for message in messages %}
-                alert(
                 {{ message.tags }} {{ message.mesaage }}
-                )
                 {% endfor %}
             </div>
             {% endif %}
         </div>
         <div class="container my-3">
-            <div class="row justify-content-end my-3">
-                <div class="col-4 input-group">
-                    <input type="text" class="form-control kw" value="{{ kw|default_if_none:'' }}">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
-                    </div>
-                </div>
-            </div>
-
             <table class = "table">
                 <tbody>
                 {% if subject_list %}
@@ -498,44 +473,6 @@
                 {% endif %}
                 </tbody>
             </table>
-            <!-- 페이징처리 시작 -->
-            <ul class="pagination justify-content-center">
-                <!-- 이전페이지 -->
-                {% if subject_list.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" data-page="{{ question_list.previous_page_number }}" href="#">이전</a>
-                </li>
-                {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
-                </li>
-                {% endif %}
-                <!-- 페이지리스트 -->
-                {% for page_number in subject_list.paginator.page_range %}
-                {% if page_number >= subject_list.number|add:-5 and page_number <= subject_list.number|add:5 %}
-                {% if page_number == subject_list.number %}
-                <li class="page-item active" aria-current="page">
-                    <a class="page-link" data-page="{{ page_number }}" href="#">{{ page_number }}</a>
-                </li>
-                {% else %}
-                <li class="page-item">
-                    <a class="page-link" data-page="{{ page_number }}" href="#">{{ page_number }}</a>
-                </li>
-                {% endif %}
-                {% endif %}
-                {% endfor %}
-                <!-- 다음페이지 -->
-                {% if subject_list.has_next %}
-                <li class="page-item">
-                    <a class="page-link" data-page="{{ subject_list.next_page_number }}" href="#">다음</a>
-                </li>
-                {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
-                </li>
-                {% endif %}
-            </ul>
-            <!-- 페이징처리 끝 -->
 
             <div id="result_back">
 
@@ -585,12 +522,6 @@
 
 </div>
 </div>
-{% if user.is_authenticated %}
-<form id="searchForm" method="get" action="{% url 'timetable:mytable' request.user.id %}">
-    <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
-    <input type="hidden" id="page" name="page" value="{{ page }}">
-    <input type="hidden" name="drop1" value="{{ drop1|default_if_none:'' }}">
-</form>
 
 <select
         id="subject"
@@ -629,7 +560,7 @@
 
 </select>
 </body>
-{% endif %}
+
 
 {% block script %}
 <script type='text/javascript'>
@@ -639,12 +570,7 @@ $(document).ready(function(){
         $("#searchForm").submit();
     });
 
-
-
     $("#btn_search").on('click', function() {
-        $("#kw").val($(".kw").val());
-        $("#page").val(1);  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
-        $("#drop1").val();
         $("#searchForm").submit();
     });
 
