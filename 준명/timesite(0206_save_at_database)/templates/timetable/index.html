@@ -1,5 +1,7 @@
 {% load static %}
 
+{% load static %}
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,23 +11,91 @@
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+      var determine = [];
+      var flag = [];
+      var i = 1;
       var bag_counts = 0;
-      var i= 1 ;
+      var count = [];
+      var day1 = [];
+      var start_timeh1 = [];
+      var start_timem1 = [];
+      var finish_timeh1 = [];
+      var finish_timem1 = [];
+      var day2 = [];
+      var start_timeh2 = [];
+      var start_timem2 = [];
+      var finish_timeh2 = [];
+      var finish_timem2 = [];
+      var day3 = [];
+      var start_timeh3 = [];
+      var start_timem3 = [];
+      var finish_timeh3 = [];
+      var finish_timem3 = [];
 
-      window.onload = function determines(i) {
-        var j;
-        alert("d");
-        var i= 1 ;
+      function determines(e) {
+        if (determine[e.value] === 0 || determine[e.value] === undefined) {
+          if (e.text != "Select") {
+            flag[e.value] = e.text;
+            count[e.value] = $("#subject option:selected").attr("value2");
+            document.getElementById("result").innerText +=
+              i + "." + e.text + "\r\n";
+            rect(e.value);
 
-        for(j=0;j<=1000;j++){
-        if($('#subject option[name="options"]'):eq(j).val()!=""){
-            alert("d")
-            rect(j);
+            e.text = flag[e.value] + "(삭제)";
+            determine[e.value] = 1;
+
+            $("#subject option:eq(0)").prop("selected", true);
+            $("#subject option:selected").text();
+
+            i = i + 1;
+          }
+        } else if (determine[e.value] === 1) {
+          var aa = document.getElementById("result");
+          while (aa.firstChild) {
+            aa.removeChild(aa.firstChild);
+          }
+          e.text = flag[e.value];
+          determine[e.value] = 0;
+          document.getElementById("result").innerText += "장바구니\n";
+          var j;
+          var k = 1;
+          clean();
+          for (j = 1; j < 200; j++) {
+            if (determine[j] === 1) {
+              document.getElementById("result").innerText +=
+                k + "." + flag[j] + "\r\n";
+              k++;
+              rect(j);
+            }
+          }
+          i = i - 1;
+          $("#subject option:eq(0)").prop("selected", true);
+          $("#subject option:selected").text();
         }
-        else break;
+      }
 
-      }
-      }
+      // function empty() {
+      //   var ctx = document.getElementById("myCanvas").getContext("2d");
+      //   ctx.fillStyle = "rgb(232, 232, 245)";
+      //   ctx.clearRect(0, 0, 600, 480);
+      //   var aa = document.getElementById("result");
+      //   while (aa.firstChild) {
+      //     aa.removeChild(aa.firstChild);
+      //   }
+      //   i = 1;
+      //   document.getElementById("result").innerText += "장바구니\n";
+
+      //   e.text = flag[e.value];
+      //   determine[e.value] = 0;
+
+      //   for (j = 1; j < 200; j++) {
+      //     if (determine[j] === 1) {
+      //       determine[j] = 0;
+
+      //       $("#subject option:eq(" + j + ")").text = flag[j];
+      //     }
+      //   }
+      // }
 
       function clean() {
         var ctx = document.getElementById("myCanvas").getContext("2d");
@@ -34,7 +104,7 @@
         ctx.clearRect(0, 0, 600, 480);
       }
 
-       function rect(a) {
+      function rect(a) {
         var Acolor = new Array(
           "#75ca87",
           "#70a5e9",
@@ -48,95 +118,90 @@
 
         var holizantal = 30;
         var vertical = 6;
+        day1[a] = $("#subject option:selected").attr("value3");
 
-
-
-
-        day1 = $('#subject_'+a).attr('value3_t');
-        start_timeh1 = $('#subject_'+a).attr("value4_t");
-        start_timem1 = $('#subject_'+a).attr("value5_t");
-        finish_timeh1= $('#subject_'+a).attr("value6_t");
-        finish_timem1 = $('#subject_'+a).attr("value7_t");
-        day2 = $('#subject_'+a).attr("value8_t");
-        start_timeh2 = $('#subject_'+a).attr("value9_t");
-        start_timem2 = $('#subject_'+a).attr("value10_t");
-        finish_timeh2 = $('#subject_'+a).attr("value11_t");
-        finish_timem2 = $('#subject_'+a).attr("value12_t");
-        day3 = $('#subject_'+a).attr("value13_t");
-        start_timeh3 = $('#subject_'+a).attr("value14_t");
-        start_timem3 = $('#subject_'+a).attr("value15_t");
-        finish_timeh3 = $('#subject_'+a).attr("value16_t");
-        finish_timem3 = $('#subject_'+a).attr("value17_t");
+        start_timeh1[a] = $("#subject option:selected").attr("value4");
+        start_timem1[a] = $("#subject option:selected").attr("value5");
+        finish_timeh1[a] = $("#subject option:selected").attr("value6");
+        finish_timem1[a] = $("#subject option:selected").attr("value7");
+        day2[a] = $("#subject option:selected").attr("value8");
+        start_timeh2[a] = $("#subject option:selected").attr("value9");
+        start_timem2[a] = $("#subject option:selected").attr("value10");
+        finish_timeh2[a] = $("#subject option:selected").attr("value11");
+        finish_timem2[a] = $("#subject option:selected").attr("value12");
+        day3[a] = $("#subject option:selected").attr("value13");
+        start_timeh3[a] = $("#subject option:selected").attr("value14");
+        start_timem3[a] = $("#subject option:selected").attr("value15");
+        finish_timeh3[a] = $("#subject option:selected").attr("value16");
+        finish_timem3[a] = $("#subject option:selected").attr("value17");
         var ctx = document.getElementById("myCanvas").getContext("2d");
 
-        if (day1 === "월") {
-          day1= 1;
-        } else if (day1 === "화") {
-          day1= 2;
-        } else if (day1 === "수") {
-          day1 = 3;
-        } else if (day1 === "목") {
-          day1= 4;
+        if (day1[a] === "월") {
+          day1[a] = 1;
+        } else if (day1[a] === "화") {
+          day1[a]= 2;
+        } else if (day1[a] === "수") {
+          day1[a] = 3;
+        } else if (day1[a] === "목") {
+          day1[a]= 4;
         } else {
-          day1 = 5;
+          day1[a] = 5;
         }
-        if (day2 === "월") {
-          day2 = 1;
-        } else if (day2=== "화") {
-          day2 = 2;
-        } else if (day2 === "수") {
-          day2= 3;
-        } else if (day2 === "목") {
-          day2= 4;
+        if (day2[a] === "월") {
+          day2[a] = 1;
+        } else if (day2[a] === "화") {
+          day2[a] = 2;
+        } else if (day2[a] === "수") {
+          day2[a]= 3;
+        } else if (day2[a] === "목") {
+          day2[a]= 4;
         } else {
-          day2 = 5;
+          day2[a] = 5;
         }
-        if (day3 === "월") {
-          day3 = 1;
-        } else if (day3 === "화") {
-          day3 = 2;
-        } else if (day3 === "수") {
-          day3 = 3;
-        } else if (day3 === "목") {
-          day3= 4;
+        if (day3[a] === "월") {
+          day3[a] = 1;
+        } else if (day3[a] === "화") {
+          day3[a] = 2;
+        } else if (day3[a] === "수") {
+          day3[a] = 3;
+        } else if (day3[a] === "목") {
+          day3[a]= 4;
         } else {
-          day3 = 5;
+          day3[a] = 5;
         }
+
         var s_time = 0;
         var f_time = 0;
 
         var color = Acolor[bag_counts % 8];
 
-        s_time = (start_timeh1 - 9) * 2 + start_timem1 / 30 + 1;
+        s_time = (start_timeh1[a] - 9) * 2 + start_timem1[a] / 30 + 1;
 
-        f_time = (finish_timeh1 - 9) * 2 + finish_timem1 / 30 + 1;
-
+        f_time = (finish_timeh1[a] - 9) * 2 + finish_timem1[a] / 30 + 1;
 
         ctx.fillStyle = color;
-        ctx.fillRect(100 * day1, 20 * s_time, 100, 20 * (f_time - s_time));
+        ctx.fillRect(100 * day1[a], 20 * s_time, 100, 20 * (f_time - s_time));
 
 
-
-        {
-          s_time = (start_timeh2 - 9) * 2 + start_timem2 / 30 + 1;
-          f_time = (finish_timeh2 - 9) * 2 + finish_timem2 / 30 + 1;
+        if (count[a] > 1) {
+          s_time = (start_timeh2[a] - 9) * 2 + start_timem2[a] / 30 + 1;
+          f_time = (finish_timeh2[a] - 9) * 2 + finish_timem2[a] / 30 + 1;
           ctx.fillStyle = color;
-          ctx.fillRect(100 * day2, 20 * s_time, 100, 20 * (f_time - s_time));
-
+          ctx.fillRect(100 * day2[a], 20 * s_time, 100, 20 * (f_time - s_time));
         }
-        {
-          s_time = (start_timeh3 - 9) * 2 + start_timem3 / 30 + 1;
 
-          f_time = (finish_timeh3 - 9) * 2 + finish_timem3 / 30 + 1;
+        if (count[a] > 2) {
+          s_time = (start_timeh3[a] - 9) * 2 + start_timem3[a] / 30 + 1;
+
+          f_time = (finish_timeh3[a] - 9) * 2 + finish_timem3[a] / 30 + 1;
 
           ctx.fillStyle = color;
-          ctx.fillRect(100 * day3, 20 * s_time, 100, 20 * (f_time - s_time));
+          ctx.fillRect(100 * day3[a], 20 * s_time, 100, 20 * (f_time - s_time));
         }
         bag_counts++;
       }
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 </head>
 
 <body>
@@ -156,187 +221,9 @@
 <div class="line">
     <div>&nbsp</div>
     <div id="login_back">
-        <canvas id="myCanvas" width="600" height="480" style="position: absolute"> </canvas>
         <!-- canvas가 자리 차지함. 수정ㄱㄱ -->
-
-
-        <table width="600" height="480" style="color: #121212">
-            <tr width="10%">
-                <th ></th>
-                <th >월</th>
-                <th >화</th>
-                <th >수</th>
-                <th >목</th>
-                <th >금</th>
-            </tr>
-            <tr>
-                <th >9:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr>
-            <tr>
-                <th >9:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr>
-            <tr>
-                <th >10:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >10:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >11:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >11:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >12:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >12:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >1:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >1:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >2:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >2:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >3:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >3:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >4:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >4:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >5:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >5:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >6:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >6:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >7:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >7:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >8:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr>
-        </table>
         <!--테이블 생성 끝-->
         <!-- checkbox -->
-
         <div class="container my-3">
             <div class="row justify-content-end my-3">
                 <div class="col-4 input-group">
@@ -373,7 +260,7 @@
                             / {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4 }}
                             {% endif %}
                             / {{ subject.credit }} 학점
-                            <button method="get" class="btn btn-outline-secondary" onclick="add()"> <a href="{% url 'timetable:add' subject.id %}"> ADD </a> </button>
+                            <button method="get" class="btn btn-outline-secondary"> <a href="{% url 'timetable:add' subject.id %}"> ADD </a> </button>
                         </div>
                     </td>
                 </tr>
@@ -433,9 +320,7 @@
             </div>
             {% endif %}
             <div id="result_back">
-
-                <div id="result">장바구니 </div><br /></div>
-
+                <div id="result">장바구니<br /></div>
             </div>
             <table class = "table">
                 <tbody>
@@ -453,7 +338,7 @@
                             / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
                             / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
                             {% elif subject.count == 3 %}
-                             {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
                             / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
                             / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
                             {% elif subject.count == 4 %}
@@ -463,10 +348,7 @@
                             / {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4 }}
                             {% endif %}
                             / {{ subject.credit }} 학점
-                            <button method="get" id="outline" class="btn btn-outline-secondary"onclick="del"> <a href="{% url 'timetable:del' subject.id %}"> DEL </a> </button>
-
-
-
+                            <button method="get" class="btn btn-outline-secondary"> <a href="{% url 'timetable:del' subject.id %}"> DEL </a> </button>
                         </div>
                     </td>
                 </tr>
@@ -481,7 +363,6 @@
         </div>
 
         <div>&nbsp</div>
-
     </div>
 </div>
 {% if user.is_authenticated %}
@@ -489,43 +370,6 @@
     <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
     <input type="hidden" id="page" name="page" value="{{ page }}">
 </form>
-
-<select
-            id="subject"
-            type="hidden"
-            onchange="determines(this.options[this.selectedIndex])"
-            class="selectpicker"
-            data-libe-search="true"
-          >
-            {% for subject in subject_selected_list %}
-            <option
-                    i=0
-                    id="subject_"+i
-                    name="options"
-                    type="hidden"
-                    value={{ subject.id }}
-                    value2={{ subject.count }}
-                    value3={{ subject.day1 }}
-                    value4={{ subject.start_h1 }}
-                    value5={{ subject.start_m1 }}
-                    value6={{ subject.fin_h1 }}
-                    value7={{ subject.fin_m1 }}
-                    value8={{ subject.day2 }}
-                    value9={{ subject.start_h2 }}
-                    value10={{ subject.start_m2 }}
-                    value11={{ subject.fin_h2 }}
-                    value12={{ subject.fin_m2 }}
-                    value13={{ subject.day3 }}
-                    value14={{ subject.start_h3 }}
-                    value15={{ subject.start_m3 }}
-                    value16={{ subject.fin_h3 }}
-                    value17={{ subject.fin_m3 }}
-                    i++;
-            >
-            </optioni>
-            {% endfor %}
-
-          </select>
 </body>
 {% endif %}
 
