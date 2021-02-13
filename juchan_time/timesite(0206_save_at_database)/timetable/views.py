@@ -3,6 +3,12 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import SubjectInfo, Subject_add
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q, Count
+from django.shortcuts import render, get_object_or_404
+from rest_framework import generics
+from rest_framework.response import Response
+from django.contrib.auth.models import User
+from django.views.generic import ListView, DetailView
 import re
 import pandas as pd
 import numpy
@@ -48,10 +54,57 @@ def main(request):
     context = {'subject_list': page_obj, 'page': page, 'kw': kw}
     return render(request, 'timetable/main.html', context)
 
+# @login_required(login_url='common:login')
+# def mytable(request, user_id):
+#     page = request.GET.get('page', '1')  # 페이지
+#
+#     drop1 = request.GET.get('drop1', '') #요일
+#     subject_list = SubjectInfo.objects.order_by('id')
+#     subject_add_list = Subject_add.objects.filter(user_id=request.user.id).values('subject_add_id').distinct().order_by('subject_add_id')
+#     subject_selected_list = []
+#     sum = 0
+#     for i in range(len(subject_add_list)):
+#         subject_selected_list.append(SubjectInfo.objects.get(id=subject_add_list[i].get('subject_add_id')))
+#         #subject_add_list는 list형태인 것 같고, i는 정수형태로 받았어.
+#         #처음에 for i in subject_add_list 로 했었는데 i를 딕셔너리 형태로 받더라... 그래서 정수형으로 바꿔주고
+#         #이제 subject_add_list[i]가 딕셔너리 형태로 되어있을 건데 --> { 'subject_add_id' = 188 } 이런 식으로
+#         #나는 188의 값만 필요하니깐 subject_add_id를 키값으로 하는 값을 출력했어. 그게 get함수야
+#         #이렇게 subject_selected_list를 만들었고, 결국 얘네를 main.html에 집어넣으면서 끝나
+#
+#     for i in range(len(subject_selected_list)):
+#         sum += subject_selected_list[i].credit
+#
+#     if kw:
+#         subject_list = subject_list.filter(
+#             Q(name__icontains=kw) |
+#             Q(professor1__icontains=kw)|
+#             Q(id__icontains=kw)|
+#             Q(code__icontains=kw)
+#         )
+#
+#     paginator = Paginator(subject_list, 10)
+#     page_obj = paginator.get_page(page)
+#
+#
+#     context = {'subject_list': page_obj, 'page': page, 'kw': kw, 'subject_selected_list': subject_selected_list,
+#                'sum':sum, 'drop1':drop1}
+#     return render(request, 'timetable/main.html', context)
+
+
+def is_valid_queryparam(param):
+    return param != '' and param is not None
+
 @login_required(login_url='common:login')
 def mytable(request, user_id):
     page = request.GET.get('page', '1')  # 페이지
     kw = request.GET.get('kw', '')  # 검색어
+    name = request.GET.get('name') # 과목이름
+    professor = request.GET.get('professor')
+    id = request.GET.get('id') # 과목ID
+    code = request.GET.get('code') # 과목코드
+    day = request.GET.get('day') # 요일
+    time = request.GET.get('time') # 시간
+    department = request.GET.get('department') # 부서
     subject_list = SubjectInfo.objects.order_by('id')
     subject_add_list = Subject_add.objects.filter(user_id=request.user.id).values('subject_add_id').distinct().order_by('subject_add_id')
     subject_selected_list = []
@@ -67,6 +120,43 @@ def mytable(request, user_id):
     for i in range(len(subject_selected_list)):
         sum += subject_selected_list[i].credit
 
+    qs = SubjectInfo.objects.all()
+    if is_valid_queryparam(name):
+        qs = qs.filter(name__icontains=name)
+    if is_valid_queryparam(professor):
+        qs = qs.filter(
+            Q(professor1__icontains = professor)|
+            Q(professor2__icontains = professor)
+        )
+    if is_valid_queryparam(code):
+        qs = qs.filter(code=code)
+    if is_valid_queryparam(id):
+        qs = qs.filter(id=id)
+    if is_valid_queryparam(day):
+        if is_valid_queryparam(time):
+            qs = qs.filter(
+                Q(day1 = day, start_time1 = time)|
+                Q(day2 = day, start_time2 = time)|
+                Q(day3 = day, start_time3 = time)|
+                Q(day4 = day, start_time4 = time)
+            )
+        else:
+            qs = qs.filter(
+                Q(day1=day) |
+                Q(day2=day) |
+                Q(day3=day) |
+                Q(day4=day)
+            )
+    elif is_valid_queryparam(time):
+        qs = qs.filter(
+            Q(start_time1 = time)|
+            Q(start_time2 = time)|
+            Q(start_time3 = time)|
+            Q(start_time4 = time)
+        )
+    if is_valid_queryparam(department):
+        qs = qs.filter(department=department)
+
     if kw:
         subject_list = subject_list.filter(
             Q(name__icontains=kw) |
@@ -75,7 +165,7 @@ def mytable(request, user_id):
             Q(code__icontains=kw)
         )
 
-    paginator = Paginator(subject_list, 10)
+    paginator = Paginator(qs, 10)
     page_obj = paginator.get_page(page)
 
 
@@ -83,10 +173,6 @@ def mytable(request, user_id):
                'sum':sum}
     return render(request, 'timetable/main.html', context)
 
-def choice_subject(request, subject_id, user_id):
-    subject = get_object_or_404(SubjectInfo, pk=subject_id)
-    subject.choice.add(request.user)
-    return redirect('timetable:mytable', user_id=request.user.id)
 
 def add(request, subject_id):
     """

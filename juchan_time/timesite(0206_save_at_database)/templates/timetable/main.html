@@ -147,8 +147,113 @@
 <a href="{% url 'common:login' %}">로그인</a>
 <a href="{% url 'common:signup' %}">회원가입</a>
 {% endif %}
-
- <div class="container my-3">
+<div class="container my-3">
+    <div class="row justify-content-end my-3">
+        <div class="col-4 input-group">
+            <div class="form-group">
+                <form method="get" action="{% url 'timetable:mytable' request.user.id %}">
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <div class="input-group">
+                                <input class="form-control py-2 border-right-0 border" type="search" name="name" placeholder="Subject name contains..." />
+                                <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <div class="input-group">
+                                <input class="form-control py-2 border-right-0 border" type="search" name="professor" placeholder="Professor name..." />
+                                <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <div class="input-group">
+                                <input class="form-control py-2 border-right-0 border" type="search" name="id" placeholder="Subject id(ex : 1, 7, 124 ...)" />
+                                <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <div class="input-group">
+                                <input class="form-control py-2 border-right-0 border" type="search" name="code" placeholder="Subject code(ex : GS1001, GS1002 ...)" />
+                                <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <select id= "department" name = "department" >
+                        <option disabled selected value>---select department----</option>
+                        <option value="생명과학전공">생명과학전공</option>
+                        <option value="화학전공">화학전공</option>
+                        <option value="전기전자컴퓨터전공">전기전자컴퓨터전공</option>
+                        <option value="문화기술 부전공">문화기술 부전공</option>
+                        <option value="지구환경공학전공">지구환경공학전공</option>
+                        <option value="에너지부전공">에너지부전공</option>
+                        <option value="기초교육학부">기초교육학부</option>
+                        <option value="지능로봇 부전공">지능로봇 부전공</option>
+                        <option value="신소재공학전공">신소재공학전공</option>
+                        <option value="기계공학전공">기계공학전공</option>
+                        <option value="의생명공학 부전공">의생명공학 부전공</option>
+                        <option value="수학부전공">수학부전공</option>
+                        <option value="물리전공">물리전공</option>
+                        <option value="대학공통">대학공통</option>
+                    </select>
+                    <select id= "day" name = "day" >
+                        <option disabled selected value>---select day----</option>
+                        <option value="월">월</option>
+                        <option value="화">화</option>
+                        <option value="수">수</option>
+                        <option value="목">목</option>
+                        <option value="금">금</option>
+                    </select>
+                    <select id= "time" name = "time" >
+                        <option disabled selected value>---select time----</option>
+                        <option value="9:00">9:00~10:30</option>
+                        <option value="10:30">10:30~12:00</option>
+                        <option value="13:00">13:00~14:30</option>
+                        <option value="14:30">14:30~16:00</option>
+                        <option value="16:00">16:00~17:30</option>
+                    </select>
+                    <!--                    <input  type = "submit" value="Submit">-->
+                    <!--                    <p>요일을 선택하세요</p>-->
+                    <!--                    <label><input type="checkbox" name="day1" value="월" class="form-control kw" > 월</label>-->
+                    <!--                    <label><input type="checkbox" name="day2" value="화" class="form-control kw" > 화</label>-->
+                    <!--                    <label><input type="checkbox" name="day3" value="수" class="form-control kw"> 수</label>-->
+                    <!--                    <label><input type="checkbox" name="day4" value="목" class="form-control kw"> 목</label>-->
+                    <!--                    <label><input type="checkbox" name="day5" value="금" class="form-control kw"> 금</label>-->
+                    <!--                    <p>시간을 선택하세요</p>-->
+                    <!--                    <label><input type="checkbox" name="time1" value="9:00~10:30" class="form-control kw"> 9:00~10:30</label>-->
+                    <!--                    <label><input type="checkbox" name="time2" value="10:30~12:00" class="form-control kw"> 10:30~12:00</label>-->
+                    <!--                    <label><input type="checkbox" name="time3" value="13:00~14:30" class="form-control kw"> 13:00~14:30</label>-->
+                    <!--                    <label><input type="checkbox" name="time4" value="14:30~16:00" class="form-control kw"> 14:30~16:00</label>-->
+                    <!--                    <label><input type="checkbox" name="time5" value="16:00~17:30" class="form-control kw"> 16:00~17:30</label>-->
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" id="btn_search" type="submit">찾기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <!--테이블 생성-->
 <div class="line">
     <div>&nbsp</div>
@@ -190,146 +295,146 @@
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >10:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >11:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >11:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >12:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >12:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >1:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >1:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >2:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >2:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >3:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >3:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >4:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >4:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >5:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >5:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >6:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >6:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >7:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >7:30</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr><tr>
-                <th >8:00</th>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-            </tr>
+            <th >10:30</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >11:00</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >11:30</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >12:00</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >12:30</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >1:00</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >1:30</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >2:00</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >2:30</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >3:00</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >3:30</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >4:00</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >4:30</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >5:00</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >5:30</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >6:00</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >6:30</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >7:00</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >7:30</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr><tr>
+            <th >8:00</th>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+        </tr>
         </table>
         <!--테이블 생성 끝-->
         총{{ sum }}  학점
@@ -339,7 +444,7 @@
             <div>
                 {% for message in messages %}
                 alert(
-                    {{ message.tags }} {{ message.mesaage }}
+                {{ message.tags }} {{ message.mesaage }}
                 )
                 {% endfor %}
             </div>
@@ -436,93 +541,93 @@
 
                 <div id="result">장바구니 </div><br /></div>
 
-            </div>
-            <table class = "table">
-                <tbody>
-                {% if subject_selected_list %}
-                {% for subject in subject_selected_list %}
-                <tr class="text-center">
-                    <td class = "text-left">
-                        <div>
-                            {{ subject.id }}
-                            {{ subject.name }} - {{ subject.professor1 }}
-                            {{ value|linebreaks }}
-                            {% if subject.count == 1 %}
-                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
-                            {% elif subject.count == 2 %}
-                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
-                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
-                            {% elif subject.count == 3 %}
-                             {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
-                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
-                            / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
-                            {% elif subject.count == 4 %}
-                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
-                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
-                            / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
-                            / {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4 }}
-                            {% endif %}
-                            / {{ subject.credit }} 학점
-                            <button method="get" id="outline" class="btn btn-outline-secondary"onclick="del"> <a href="{% url 'timetable:del' subject.id %}"> DEL </a> </button>
-                        </div>
-                    </td>
-                </tr>
-                {% endfor %}
-                {% else %}
-                <tr>
-                    <td colspan="3">강의가 없습니다.</td>
-                </tr>
-                {% endif %}
-                </tbody>
-            </table>
         </div>
-
-        <div>&nbsp</div>
-
+        <table class = "table">
+            <tbody>
+            {% if subject_selected_list %}
+            {% for subject in subject_selected_list %}
+            <tr class="text-center">
+                <td class = "text-left">
+                    <div>
+                        {{ subject.id }}
+                        {{ subject.name }} - {{ subject.professor1 }}
+                        {{ value|linebreaks }}
+                        {% if subject.count == 1 %}
+                        / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                        {% elif subject.count == 2 %}
+                        / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                        / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                        {% elif subject.count == 3 %}
+                        {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                        / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                        / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
+                        {% elif subject.count == 4 %}
+                        / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                        / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                        / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
+                        / {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4 }}
+                        {% endif %}
+                        / {{ subject.credit }} 학점
+                        <button method="get" id="outline" class="btn btn-outline-secondary"onclick="del"> <a href="{% url 'timetable:del' subject.id %}"> DEL </a> </button>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="3">강의가 없습니다.</td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
     </div>
+    <div>&nbsp</div>
+
+</div>
 </div>
 {% if user.is_authenticated %}
 <form id="searchForm" method="get" action="{% url 'timetable:mytable' request.user.id %}">
     <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
     <input type="hidden" id="page" name="page" value="{{ page }}">
+    <input type="hidden" name="drop1" value="{{ drop1|default_if_none:'' }}">
 </form>
 
 <select
-            id="subject"
+        id="subject"
+        type="hidden"
+        onchange="determines(this.options[this.selectedIndex])"
+        class="selectpicker"
+        data-libe-search="true"
+>
+    {% for subject in subject_selected_list %}
+    <option
+            i=0
+            id="subject_"+i
+            name="options"
             type="hidden"
-            onchange="determines(this.options[this.selectedIndex])"
-            class="selectpicker"
-            data-libe-search="true"
-          >
-            {% for subject in subject_selected_list %}
-            <option
-                    i=0
-                    id="subject_"+i
-                    name="options"
-                    type="hidden"
-                    value={{ subject.id }}
-                    value2={{ subject.count }}
-                    value3={{ subject.day1 }}
-                    value4={{ subject.start_h1 }}
-                    value5={{ subject.start_m1 }}
-                    value6={{ subject.fin_h1 }}
-                    value7={{ subject.fin_m1 }}
-                    value8={{ subject.day2 }}
-                    value9={{ subject.start_h2 }}
-                    value10={{ subject.start_m2 }}
-                    value11={{ subject.fin_h2 }}
-                    value12={{ subject.fin_m2 }}
-                    value13={{ subject.day3 }}
-                    value14={{ subject.start_h3 }}
-                    value15={{ subject.start_m3 }}
-                    value16={{ subject.fin_h3 }}
-                    value17={{ subject.fin_m3 }}
-                    i++;
-            >
-            </option>
-            {% endfor %}
+            value={{ subject.id }}
+            value2={{ subject.count }}
+            value3={{ subject.day1 }}
+            value4={{ subject.start_h1 }}
+            value5={{ subject.start_m1 }}
+            value6={{ subject.fin_h1 }}
+            value7={{ subject.fin_m1 }}
+            value8={{ subject.day2 }}
+            value9={{ subject.start_h2 }}
+            value10={{ subject.start_m2 }}
+            value11={{ subject.fin_h2 }}
+            value12={{ subject.fin_m2 }}
+            value13={{ subject.day3 }}
+            value14={{ subject.start_h3 }}
+            value15={{ subject.start_m3 }}
+            value16={{ subject.fin_h3 }}
+            value17={{ subject.fin_m3 }}
+            i++;
+    >
+    </option>
+    {% endfor %}
 
-          </select>
+</select>
 </body>
 {% endif %}
 
@@ -534,11 +639,16 @@ $(document).ready(function(){
         $("#searchForm").submit();
     });
 
+
+
     $("#btn_search").on('click', function() {
         $("#kw").val($(".kw").val());
         $("#page").val(1);  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
+        $("#drop1").val();
         $("#searchForm").submit();
     });
+
+
     $(".add").on('click', function() {
         if(confirm("장바구니에 담으시겠습니까?")) {
             location.href = $(this).data('uri');
@@ -546,7 +656,6 @@ $(document).ready(function(){
     }); //add버튼 누르면 진짜 add할건지 물어볼거야
 
 });
-
 
 </script>
 {% endblock %}
