@@ -21,9 +21,9 @@ from django.http import HttpResponse
 
 def index(request):
     if is_valid_queryparam(request.user.id):
-        return redirect('common:login')
+        return redirect('timetable:mytable', user_id=request.user.id)
     else:
-        return redirect('timetable:mytable', user_id = request.user.id)
+        return redirect('common:login')
 
 def main(request):
     """
