@@ -20,20 +20,10 @@ from django.http import HttpResponse
 # ---------------------------------------------------------------------------- #
 
 def index(request):
-    page = request.GET.get('page', '1')  # 페이지
-    kw = request.GET.get('kw', '')  # 검색어
-    subject_list = SubjectInfo.objects.order_by('name')
-    if kw:
-        subject_list = subject_list.filter(
-            Q(name__icontains=kw) |
-            Q(professor1__icontains=kw)
-        )
-
-    paginator = Paginator(subject_list, 10)
-    page_obj = paginator.get_page(page)
-
-    context = {'subject_list': page_obj, 'page': page, 'kw': kw}
-    return redirect('timetable:mytable', user_id = request.user.id)
+    if is_valid_queryparam(request.user.id):
+        return redirect('common:login')
+    else:
+        return redirect('timetable:mytable', user_id = request.user.id)
 
 def main(request):
     """
