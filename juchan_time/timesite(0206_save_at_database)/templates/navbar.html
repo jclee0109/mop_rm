@@ -34,7 +34,7 @@
 
 </style>
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-    <a class="navbar-brand" href="{% url 'timetable:main' %}">GI간표</a>
+    <a class="navbar-brand" href="{% url 'timetable:mytable' request.user.id %}">GI간표</a>
 
     <div class="collapse navbar-collapse flex-grow-0" id="navbarNav">
         <ul class="navbar-nav">
