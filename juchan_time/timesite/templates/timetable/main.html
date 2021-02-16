@@ -7,18 +7,25 @@
     <title>MAIN</title>
     <!--   <link rel="stylesheet" type="text/css" href="{% static 'style_table.css' %}" />-->
     <style>
+    @media  only screen and (min-width:650px) and (max-width:1024px) {
+#outer_btn_right { display: none; }
+#table2 { display: none; }
+#myCanvas2{
+display: none;
+    }
 body{
 background-color:rgb(248, 249, 250);
 margin:0;
 padding:0;
 }
+
 #login_back{
 background-color:white;
 padding: 20px;
 }
 .line {
   display: grid;
-  grid-template-columns: 1fr 640px 1fr;
+  grid-template-columns: 1fr 640px 0 1fr;
 }
 .subject_button {
   display: grid;
@@ -135,12 +142,12 @@ background-color:rgb(210, 210, 210);
 background-color:rgb(240, 240, 240);
 border-radius:5px;
 width:600px;
-
+margin:0;
 }
 
 #result_bag1{
 text-align:left;
- text-indent:20px;
+ margin-left:20px;
 }
 #result{
 color:#57af4c;
@@ -149,6 +156,8 @@ font-size: 20px;
 text-indent:10px;
 padding:12px;
 height:20px;
+padding-top: 10;
+padding-bottom: 20;
 
 }
 
@@ -242,8 +251,7 @@ margin-top:0px;
 color:black;
 font-size: 5px;
 }
-</style>
-    <style>
+
 #btn_search{
 padding:10px 15px;
 border:0px ;
@@ -253,6 +261,9 @@ transition: all 0.2s;
 background-color:#57af4c;
 font-size:15px;
  border-radius: 5px;
+ margin-top:3px;
+ position: relative;
+ width:600px;
 }
 #btn_search:hover{
   background-color:#376e2f;
@@ -262,12 +273,16 @@ font-size:15px;
 input[type="search"] {
   border: 1px solid black;
   background: white!important;
-  width: 240px;
+  width: 600px;
   font-size: 15px;
   padding: 10px;
   text-transform: none;
   color: black;
+  margin-top:3px;
+  position: relative;
 }
+
+
 input[name:"professor"] {
   border: 1px solid black;
   background: white!important;
@@ -280,7 +295,7 @@ input[name:"professor"] {
 select{
 padding: 5px;
 background-color:rgb(240, 240, 240);
-width:170;
+width:196;
 }
 select:hover{
 padding: 5px;
@@ -292,7 +307,640 @@ background-color:white;
 .input-group{
 display:inline;
 }
+.search2_1{
+width:297px!important;
+}
+}
+</style>
+    <style >
+    @media  only screen and  (min-width:1024px) {
+    #table2 { display: none; }
+    #myCanvas2{
+display: none;
+    }
+    #light_down{
+    display:none;
+    }
+#outer_btn_right {
+padding:10px;
+background-color:white;
+}
+
+body{
+background-color:rgb(248, 249, 250);
+margin:0;
+padding:0;
+}
+#login_back{
+background-color:white;
+padding-top: 20px;
+padding: 10px;
+}
+.line {
+  display: grid;
+  grid-template-columns: 1fr 620px 400px 1fr;
+}
+.subject_button {
+  display: grid;
+  grid-template-columns: 1fr 90px;
+}
+
+#search_group{
+ display: grid;
+  grid-template-columns: 540px 1fr;
+}
+.subject_button2 {
+  display: grid;
+  grid-template-columns: 1fr 90px;
+}
+table {
+   border: 0.1px solid #444444;
+  border-collapse: collapse;
+  font-size: 5px;
+}
+th,
+td {
+  border-collapse: collapse;
+
+}
+th {
+  height: 40px;
+  background-color: white;
+  color: black;
+  border-right: 1px solid #444444;
+  width: 100px;
+  font-size:15;
+  font-weight:100;
+}
+td {
+  width: 100px;
+  height: 40px;
+  text-align: center;
+}
+tr{
+border-bottom: 1px dotted rgb(200, 200, 200);
+}
+.table{
+width:600px;
+border: 0px;
+
+}
+.table1{
+width:385px;
+border: 0px;
+
+}
+#days{
+font-size: 20px;
+font-weight:500;
+
+  border-bottom: 1px solid #444444;
+}
+#subject_table{
+  background-color:rgb(240, 240, 240);
+  border-radius: 5px;
+  height:60px;
+  margin: 2px;
+  width:370px;
+}
+#subject_table:hover{
+color:white;
+background-color:rgb(109, 207, 96);
+}
+#subject_table1{
+font-size: 13px;
+ text-align:left;
+ margin-left:30px;
+  padding-top: 7px;
+  height:20px;
+  transition: all 0.2s;
+
+}
+#subject_table1_1{
+ display:inline;
+ max-width: 300px;
+  max-height:20px;
+ overflow: auto;
+
+}
+#subject_table2{
+font-size: 11px;
+text-align: left;
+ max-width: 250px;
+margin-left:30px;
+  overflow: auto;
+}
+#subject_table3{
+font-size: 10px;
+align: right;
+ display:inline;
+ text-indent: 30px;
+
+}
+p{
+ display:inline
+}
+a{
+ text-decoration: none;
+     color:#57af4c;
+}
+
+#button_subject_table{
+padding:5px 10px;
+border:1px solid white;
+border-radius:5px;
+box-sizing: border-box;
+font-family:'Roboto',sans-serif;
+font-weight:2000;
+color:#57af4c;
+text-align:center;
+transition: all 0.2s;
+}
+
+#button_subject_table:hover{
+color:#57af4c;
+background-color:rgb(210, 210, 210);
+}
+
+#result_bag{
+background-color:rgb(240, 240, 240);
+border-radius:5px;
+width:600px;
+
+}
+
+
+#result_bag1{
+text-align:left;
+ margin-left:20px;
+}
+#result{
+color:#57af4c;
+font-weight:1000;
+font-size: 20px;
+margin-left:10px;
+padding:12px;
+height:20px;
+
+}
+#result1{
+color:#57af4c;
+font-weight:1000;
+font-size: 20px;
+margin-left:10px;
+padding:12px;
+height:20px;
+margin-bottom:10px;
+
+
+}
+#sum{
+color:#57af4c;
+}
+#result_bag1{
+font-size: 12px;
+padding: 10px;
+ border-top: 1px solid rgb(200, 200, 200);
+}
+
+#search{
+padding:10px;
+border: 0px solid ;
+font-size:15px;
+}
+
+#search_group{
+ border: 1px solid rgb(200, 200, 200);
+ width:600px;
+ margin:0;
+ padding:0;
+
+}
+#alarm{
+color: red;
+max-width:600px;
+max-height: max-content;
+ background-color:white;
+}
+.table_body{
+height: 500px;
+        overflow: auto;
+}
+
+    .table_body::-webkit-scrollbar {
+    width: 10px;
+  }
+  .table_body::-webkit-scrollbar-thumb {
+    background-color: #57af4c;
+    border-radius: 10px;
+  }
+  .table_body::-webkit-scrollbar-track {
+    background-color: grey;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  }
+  select:not(:-internal-list-box) {
+
+}
+
+#alert {
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+#tr_noline{
+ border: 0px solid ;
+}
+#bottom_design{
+ background-color: #a7a7a7;
+    padding:70px;
+    text-align: center;
+    color:white;
+    font-size:15px;
+    font-weight:300;
+
+padding-bottom:20px;
+}
+
+.bottom_text{
+font-design: none;
+color:blue;
+ font-size: 13px;
+}
+#login_copyright1{
+
+ padding-top:40px;
+color:black;
+font-size: 5px;
+}
+#login_copyright2{
+margin:20px;
+margin-top:0px;
+color:black;
+font-size: 5px;
+}
+
+#btn_search{
+padding:10px 15px;
+border:0px ;
+color:white;
+text-align:center;
+transition: all 0.2s;
+background-color:#57af4c;
+font-size:15px;
+ border-radius: 5px;
+ margin-top:3px;
+ position: relative;
+ width:370px;
+}
+#btn_search:hover{
+  background-color:#376e2f;
+}
+.form-group{
+}
+input[type="search"] {
+  border: 1px solid black;
+  background: white!important;
+  width: 370px;
+  font-size: 15px;
+  padding: 10px;
+  text-transform: none;
+  color: black;
+  margin-top:3px;
+  position: relative;
+}
+
+
+select{
+padding: 7px;
+background-color:rgb(240, 240, 240);
+width:370;
+ border-radius: 2px;
+
+
+}
+
+select:hover{
+background-color:white;
+}
+
+.search_2_1
+{
+width:182px ! important;
+}
+.search_2{
+display:inline;
+}
+i{display:none;}
+.input-group-text bg-transparent{display:none;}
+    }
+
     </style>
+    <style>
+
+@media  only screen and (max-width:650px) {
+#table1 { display: none; }
+#myCanvas{
+display: none;
+}
+
+#outer_btn_right { display: none; }
+
+body{
+background-color:rgb(248, 249, 250);
+margin:0;
+padding:0;
+}
+
+#login_back{
+background-color:white;
+padding: 10px;
+}
+.line {
+  display: grid;
+  grid-template-columns: 1fr 320px 0 1fr;
+}
+.subject_button {
+  display: grid;
+  grid-template-columns: 1fr 85px;
+}
+
+#search_group{
+ display: grid;
+  grid-template-columns: 240px 1fr;
+}
+.subject_button2 {
+
+
+  display: grid;
+  grid-template-columns: 1fr 85px;
+}
+table {
+   border: 0.1px solid #444444;
+  border-collapse: collapse;
+  font-size: 5px;
+}
+th,
+td {
+  border-collapse: collapse;
+
+}
+th {
+  height: 20px;
+  background-color: white;
+  color: black;
+  border-right: 1px solid #444444;
+  width: 50px;
+  font-size:7;
+  font-weight:100;
+}
+td {
+  width: 50px;
+  height: 20px;
+  text-align: center;
+}
+tr{
+border-bottom: 1px dotted rgb(200, 200, 200);
+}
+.table{
+width:300px;
+border: 0px;
+
+}
+#days{
+font-size: 10px;
+font-weight:500;
+
+  border-bottom: 1px solid #444444;
+}
+#subject_table{
+  background-color:rgb(240, 240, 240);
+  border-radius: 5px;
+  margin: 1px;
+  min-height:45px
+}
+#subject_table:hover{
+color:white;
+background-color:rgb(109, 207, 96);
+}
+#subject_table1{
+font-size: 5px;
+ text-align:left;
+ padding-left: 10px;
+  padding-top: 4px;
+height:20px;
+  transition: all 0.2s;
+
+
+}
+#subject_table1_1{
+ display:inline;
+ width: 190px;
+height:20px;
+ overflow: auto;
+}
+#subject_table2{
+font-size: 4px;
+padding-left: 10px;
+text-align: left;
+ width: 200px;
+
+}
+#subject_table3{
+font-size: 5px;
+padding-left: 30px;
+align: right;
+ display:inline;
+}
+p{
+ display:inline
+}
+a{
+ text-decoration: none;
+     color:#57af4c;
+}
+
+#button_subject_table{
+padding:3px 5px;
+border:1px solid white;
+margin:0 0.3em 0.3em 0;
+border-radius:5px;
+box-sizing: border-box;
+font-family:'Roboto',sans-serif;
+font-weight:1000;
+color:#57af4c;
+text-align:center;
+transition: all 0.2s;
+}
+
+#button_subject_table:hover{
+color:#57af4c;
+background-color:rgb(210, 210, 210);
+}
+
+#result_bag{
+background-color:rgb(240, 240, 240);
+border-radius:5px;
+width:300px;
+margin:0;
+}
+
+#result_bag1{
+text-align:left;
+ margin-left:10px;
+}
+#result{
+color:#57af4c;
+font-weight:1000;
+font-size: 12px;
+padding:6px;
+height:10px;
+padding-top: 5;
+padding-bottom: 10;
+
+}
+
+#sum{
+color:#57af4c;
+font-size: 3px;
+}
+#result_bag1{
+font-size: 5px;
+padding: 5px;
+ border-top: 1px solid rgb(200, 200, 200);
+}
+
+#search{
+padding:5px;
+border: 0px solid ;
+font-size:7px;
+}
+
+#search_group{
+ border: 1px solid rgb(200, 200, 200);
+ width:300px;
+ margin:0;
+ padding:0;
+
+}
+.table_body{
+height: 350px;
+        overflow: auto;
+}
+
+    .table_body::-webkit-scrollbar {
+    width: 10px;
+  }
+  .table_body::-webkit-scrollbar-thumb {
+    background-color: #57af4c;
+    border-radius: 10px;
+  }
+  .table_body::-webkit-scrollbar-track {
+    background-color: grey;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  }
+  select:not(:-internal-list-box) {
+
+}
+form{margin:0;}
+
+#alert {
+font-size: 6px;
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+#tr_noline{
+ border: 0px solid ;
+}
+#bottom_design{
+ background-color: #a7a7a7;
+    padding:35px;
+    text-align: center;
+    color:white;
+    font-size:7px;
+    font-weight:300;
+
+padding-bottom:10px;
+}
+
+.bottom_text{
+font-design: none;
+color:blue;
+ font-size: 6px;
+}
+#login_copyright1{
+
+ padding-top:20px;
+color:black;
+font-size: 1px;
+}
+#login_copyright2{
+margin:10px;
+margin-top:0px;
+color:black;
+font-size: 1px;
+}
+
+#btn_search{
+padding:7px 7px;
+border:0px ;
+color:white;
+text-align:center;
+transition: all 0.2s;
+background-color:#57af4c;
+font-size:7px;
+ border-radius: 5px;
+ margin-top:2px;
+ position: relative;
+ width:70px;
+}
+#btn_search:hover{
+  background-color:#376e2f;
+}
+input[type="search"] {
+  border: 1px solid black;
+  background: white!important;
+  width: 220px;
+  font-size: 7px;
+  padding: 7px;
+  text-transform: none;
+  color: black;
+  margin-top:2px;
+  margin-left: 4px;
+  position: relative;
+}
+
+select{
+display:none;
+}
+select:hover{
+padding: 3px;
+background-color:white;
+}
+.form-group col-12{
+ display:inline;
+}
+.input-group{
+display:inline;
+}
+.search2_1{
+display:none;
+}
+}
+</style>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
       var bag_counts = 0;
@@ -425,7 +1073,7 @@ display:inline;
           f_time = (finish_timeh2 - 9) * 2 + finish_timem2 / 30 + 1;
           ctx.fillStyle = color;
           ctx.fillRect(100 * day2, 20 * s_time+20, 100, 20 * (f_time - s_time));
-ctx.fillStyle = "black";
+        ctx.fillStyle = "black";
         ctx.fillText(name,100 * day2+5, 20 * s_time+46,90);
         ctx.fillText("  - "+pro,100 * day2+5, 20 * s_time+58,90);
         ctx.fillText(code,100 * day2+5, 20 * s_time+32,90);
@@ -455,6 +1103,62 @@ ctx.fillStyle = "black";
         ctx.fillText("  - "+pro,100 * day4+5, 20 * s_time+58,90);
         ctx.fillText(code,100 * day4+5, 20 * s_time+32,90);
         }
+<!--        여기부터 2번-->
+        var ctx2 = document.getElementById("myCanvas2").getContext("2d");
+
+        s_time = 0;
+        f_time = 0;
+
+        var color = Acolor[bag_counts % 8];
+
+        s_time = (start_timeh1 - 9) * 2 + start_timem1 / 30 + 1;
+        f_time = (finish_timeh1 - 9) * 2 + finish_timem1 / 30 + 1;
+
+        ctx2.fillStyle = color;
+        ctx2.font = '6px Arial';
+        ctx2.fillRect(50 * day1, 10 * s_time+10, 50, 10 * (f_time - s_time));
+        ctx2.fillStyle = "black";
+        ctx2.fillText(name,50 * day1+2, 10 * s_time+23,45);
+        ctx2.fillText("  - "+pro,50 * day1+2, 10 * s_time+29,45);
+        ctx2.fillText(code,50 * day1+2, 10 * s_time+16,45);
+
+        s_time = (start_timeh2 - 9) * 2 + start_timem2 / 30 + 1;
+        f_time = (finish_timeh2 - 9) * 2 + finish_timem2 / 30 + 1;
+
+        ctx2.fillStyle = color;
+        ctx2.font = '6px Arial';
+        ctx2.fillRect(50 * day2, 10 * s_time+10, 50, 10 * (f_time - s_time));
+        ctx2.fillStyle = "black";
+        ctx2.fillText(name,50 * day2+2, 10 * s_time+23,45);
+        ctx2.fillText("  - "+pro,50 * day2+2, 10 * s_time+29,45);
+        ctx2.fillText(code,50 * day2+2, 10 * s_time+16,45);
+
+        s_time = (start_timeh3 - 9) * 2 + start_timem3 / 30 + 1;
+        f_time = (finish_timeh3 - 9) * 2 + finish_timem3 / 30 + 1;
+
+        ctx2.fillStyle = color;
+        ctx2.font = '6px Arial';
+        ctx2.fillRect(50 * day3, 10 * s_time+10, 50, 10 * (f_time - s_time));
+        ctx2.fillStyle = "black";
+        ctx2.fillText(name,50 * day3+2, 10 * s_time+23,45);
+        ctx2.fillText("  - "+pro,50 * day3+2, 10 * s_time+29,45);
+        ctx2.fillText(code,50 * day3+2, 10 * s_time+16,45);
+
+        s_time = (start_timeh4 - 9) * 2 + start_timem4 / 30 + 1;
+        f_time = (finish_timeh4 - 9) * 2 + finish_timem4 / 30 + 1;
+
+        ctx2.fillStyle = color;
+        ctx2.font = '6px Arial';
+        ctx2.fillRect(50 * day4, 10 * s_time+10, 50, 10 * (f_time - s_time));
+        ctx2.fillStyle = "black";
+        ctx2.fillText(name,50 * day4+2, 10 * s_time+23,45);
+        ctx2.fillText("  - "+pro,50 * day4+2, 10 * s_time+29,45);
+        ctx2.fillText(code,50 * day4+2, 10 * s_time+16,45);
+
+
+
+
+
         bag_counts++;
       }
     </script>
@@ -487,9 +1191,16 @@ ctx.fillStyle = "black";
                     style="position: absolute"
             >
             </canvas>
+            <canvas
+                    id="myCanvas2"
+                    width="300"
+                    height="280"
+                    style="position: absolute"
+            >
+            </canvas>
 
-            <table width="600" style="color: #121212 ">
-                <tr width="10%">
+            <table id="table1" width="600" style="color: #121212 ">
+                <tr >
                     <th ></th>
                     <th id="days" >Mon</th>
                     <th id="days" >Tue</th>
@@ -498,7 +1209,111 @@ ctx.fillStyle = "black";
                     <th id="days" >Fri</th>
                 </tr>
                 <tr>
-                    <th >9:00</th>
+                    <th >09:00</th>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                </tr>
+
+                <tr>
+                    <th >10:00</th>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                </tr><tr>
+                <th >11:00</th>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+            </tr><tr>
+                <th >12:00</th>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+            </tr><tr>
+                <th >13:00</th>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+            </tr><tr>
+                <th >14:00</th>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+            </tr><tr>
+                <th >15:00</th>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+            </tr><tr>
+                <th >16:00</th>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+            </tr><tr>
+                <th >17:00</th>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+            </tr><tr>
+                <th >18:00</th>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+            </tr><tr>
+                <th >19:00</th>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+            </tr><tr>
+                <th >20:00</th>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+            </tr><tr>
+                <th >21:00</th>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+            </tr>
+            </table>
+            <table  id="table2"width="300" style="color: #121212 ">
+                <tr >
+                    <th ></th>
+                    <th id="days" >Mon</th>
+                    <th id="days" >Tue</th>
+                    <th id="days" >Wed</th>
+                    <th id="days" >Thu</th>
+                    <th id="days" >Fri</th>
+                </tr>
+                <tr>
+                    <th >09:00</th>
                     <td ></td>
                     <td ></td>
                     <td ></td>
@@ -593,7 +1408,7 @@ ctx.fillStyle = "black";
             </tr>
             </table>
             <!--테이블 생성 끝-->
-            <div style=" text-indent:520px;">
+            <div style=" text-indent:85%;">
                 <div id="sum">총 {{ sum }}  학점</div>
             </div>
 
@@ -615,88 +1430,7 @@ ctx.fillStyle = "black";
             <!--                {% endfor %}-->
             <!--                {% endif %}-->
             <!--            </div>-->
-                        <select id= "department" name = "department" >
-                            <option disabled selected value>---select department----</option>
-                            <option value="생명과학전공">생명과학전공</option>
-                            <option value="화학전공">화학전공</option>
-                            <option value="전기전자컴퓨터전공">전기전자컴퓨터전공</option>
-                            <option value="문화기술 부전공">문화기술 부전공</option>
-                            <option value="지구환경공학전공">지구환경공학전공</option>
-                            <option value="에너지부전공">에너지부전공</option>
-                            <option value="기초교육학부">기초교육학부</option>
-                            <option value="지능로봇 부전공">지능로봇 부전공</option>
-                            <option value="신소재공학전공">신소재공학전공</option>
-                            <option value="기계공학전공">기계공학전공</option>
-                            <option value="의생명공학 부전공">의생명공학 부전공</option>
-                            <option value="수학부전공">수학부전공</option>
-                            <option value="물리전공">물리전공</option>
-                            <option value="대학공통">대학공통</option>
-                        </select>
-                        <select id= "day" name = "day" >
-                            <option disabled selected value>---select day----</option>
-                            <option value="월">월</option>
-                            <option value="화">화</option>
-                            <option value="수">수</option>
-                            <option value="목">목</option>
-                            <option value="금">금</option>
-                        </select>
-                        <select id= "time" name = "time" >
-                            <option disabled selected value>---select time----</option>
-                            <option value="9:00">9:00~10:30</option>
-                            <option value="10:30">10:30~12:00</option>
-                            <option value="13:00">13:00~14:30</option>
-                            <option value="14:30">14:30~16:00</option>
-                            <option value="16:00">16:00~17:30</option>
-                        </select>
-                <div class="form-group">
 
-                    <form method="get" action="{% url 'timetable:mytable' request.user.id %}">
-                        <div class="form-row">
-                            <div class="form-group col-12">
-                                <div class="input-group">
-                                    <input class="form-control py-2 border-right-0 border" type="search" name="name" placeholder="Subject name contains..." />
-                                    <span class="input-group-append">
-                        <div class="input-group-text bg-transparent">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <!--                            과목이름 입력끝-->
-
-                        <div class="form-row">
-                            <div class="form-group col-12">
-                                <div class="input-group1">
-                                    <input class="form-control py-2 border-right-0 border" type="search" name="professor" placeholder="Professor name..." />
-                                    <span class="input-group-append">
-                        <div class="input-group-text bg-transparent">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-12">
-                                <div class="input-group1">
-                                    <input class="form-control py-2 border-right-0 border" type="search" name="code" placeholder="Subject code(ex : GS1001, GS1002 ...)" />
-                                    <span class="input-group-append">
-                        <div class="input-group-text bg-transparent">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </span>
-                                </div>
-                            </div>
-                        </div>
-            <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" id="btn_search" type="submit">찾기</button>
-                        </div>
-
-
-                    </form>
-                </div>
 
 
             <div id="result_bag">
@@ -711,7 +1445,7 @@ ctx.fillStyle = "black";
                         <td class = "text-left">
                             <div  class="subject_button2">
                                 <div id="result_bag1">
-                                    {{ subject.id }}
+
                                     {{ subject.name }} - {{ subject.professor1 }}
                                     {{ value|linebreaks }}
                                     {% if subject.count == 1 %}
@@ -744,9 +1478,171 @@ ctx.fillStyle = "black";
                     </tbody>
                 </table>
             </div>
+            <div id="light_down">
+                <div id="result">검색창</div>
+                <form method="get" action="{% url 'timetable:mytable' request.user.id %}">
+                <select id= "department" name = "department" >
+                    <option disabled selected value>---select department----</option>
+                    <option value="생명과학전공">생명과학전공</option>
+                    <option value="화학전공">화학전공</option>
+                    <option value="전기전자컴퓨터전공">전기전자컴퓨터전공</option>
+                    <option value="문화기술 부전공">문화기술 부전공</option>
+                    <option value="지구환경공학전공">지구환경공학전공</option>
+                    <option value="에너지부전공">에너지부전공</option>
+                    <option value="기초교육학부">기초교육학부</option>
+                    <option value="지능로봇 부전공">지능로봇 부전공</option>
+                    <option value="신소재공학전공">신소재공학전공</option>
+                    <option value="기계공학전공">기계공학전공</option>
+                    <option value="의생명공학 부전공">의생명공학 부전공</option>
+                    <option value="수학부전공">수학부전공</option>
+                    <option value="물리전공">물리전공</option>
+                    <option value="대학공통">대학공통</option>
+                </select>
+                <select id= "day" name = "day" >
+                    <option disabled selected value>---select day----</option>
+                    <option value="월">월</option>
+                    <option value="화">화</option>
+                    <option value="수">수</option>
+                    <option value="목">목</option>
+                    <option value="금">금</option>
+                </select>
+                <select id= "time" name = "time" >
+                    <option disabled selected value>---select time----</option>
+                    <option value="09:00">09:00~10:30</option>
+                    <option value="10:30">10:30~12:00</option>
+                    <option value="13:00">13:00~14:30</option>
+                    <option value="14:30">14:30~16:00</option>
+                    <option value="16:00">16:00~17:30</option>
+                </select>
+
+                    <input class="form-control py-2 border-right-0 border" type="search" name="name" placeholder="Subject name contains..." />
+
+                    <input class="search2_1" type="search" name="professor" placeholder="Professor name..." />
+
+                    <input class="search2_1" type="search" name="code" placeholder="Subject code(ex : GS1001, GS1002 ...)" />
+
+                    <button class="btn btn-outline-secondary" id="btn_search" type="submit">찾기</button>
+
+                </form>
+
+
+
+                <!-- checkbox -->
+                <div class="container my-3">
+                    <div class = "table">
+                        <div id="result_back">
+
+                            <div id="result">수업목록 </div></div>
+                        <div class="table_body">
+                            {% if subject_list %}
+                            {% for subject in subject_list %}
+                            <div class="text-center">
+                                <div class = "text-left">
+                                    <div id="subject_table">
+                                        <div id="subject_table1" class="subject_button">
+                                            <div id="subject_table1_1">
+                                                {{ subject.id }}
+                                                {{ subject.name }} - {{ subject.professor1 }}
+                                            </div>
+                                            <div id="subject_table3">
+
+                                                <button method="get" id="button_subject_table" class="btn btn-outline-secondary" > <a href="{% url 'timetable:add' subject.id %}"> ADD </a> </button></div>
+                                        </div>
+                                        <div id="subject_table2">
+                                            {% if subject.count == 1 %}
+                                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                                            {% elif subject.count == 2 %}
+                                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                                            {% elif subject.count == 3 %}
+                                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                                            / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
+                                            {% elif subject.count == 4 %}
+                                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                                            / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
+                                            / {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4 }}
+                                            {% endif %}
+                                            / {{ subject.credit }} 학점
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div>
+                                <div colspan="3">강의가 없습니다.</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="outer_btn_right">
+            <div class="form-group">
+                <form method="get" action="{% url 'timetable:mytable' request.user.id %}">
+                    <div id="result1">검색창 </div>
+                    <div id="select_box">
+                        <select name = "department" >
+                            <option disabled selected value>---select department----</option>
+                            <option value="생명과학전공">생명과학전공</option>
+                            <option value="화학전공">화학전공</option>
+                            <option value="전기전자컴퓨터전공">전기전자컴퓨터전공</option>
+                            <option value="문화기술 부전공">문화기술 부전공</option>
+                            <option value="지구환경공학전공">지구환경공학전공</option>
+                            <option value="에너지부전공">에너지부전공</option>
+                            <option value="기초교육학부">기초교육학부</option>
+                            <option value="지능로봇 부전공">지능로봇 부전공</option>
+                            <option value="신소재공학전공">신소재공학전공</option>
+                            <option value="기계공학전공">기계공학전공</option>
+                            <option value="의생명공학 부전공">의생명공학 부전공</option>
+                            <option value="수학부전공">수학부전공</option>
+                            <option value="물리전공">물리전공</option>
+                            <option value="대학공통">대학공통</option>
+                        </select>
+                        <select name = "day" >
+                            <option disabled selected value>---select day----</option>
+                            <option value="월">월</option>
+                            <option value="화">화</option>
+                            <option value="수">수</option>
+                            <option value="목">목</option>
+                            <option value="금">금</option>
+                        </select>
+                        <select name = "time" >
+                            <option disabled selected value>---select time----</option>
+                            <option value="09:00">09:00~10:30</option>
+                            <option value="10:30">10:30~12:00</option>
+                            <option value="13:00">13:00~14:30</option>
+                            <option value="14:30">14:30~16:00</option>
+                            <option value="16:00">16:00~17:30</option>
+                        </select>
+                    </div>
+
+
+
+
+
+                    <input class="form-control py-2 border-right-0 border" type="search" name="name" placeholder="Subject name contains..." />
+
+                    <div class="search_2">
+                        <input class="search_2_1" type="search" professor placeholder="Professor name..." />
+                        <input class="search_2_1" type="search" name="code" placeholder="Subject code(ex : GS1001, GS1002 ...)" />
+
+
+                    </div>
+                    <button class="btn btn-outline-secondary" id="btn_search" type="submit">찾기</button>
+
+                </form>
+            </div>
+
             <!-- checkbox -->
             <div class="container my-3">
-                <div class = "table">
+                <div class = "table1">
                     <div id="result_back">
 
                         <div id="result">수업목록 </div></div>
@@ -797,9 +1693,7 @@ ctx.fillStyle = "black";
                     </div>
                 </div>
             </div>
-
         </div>
-
         <div>&nbsp</div>
 
     </div>
@@ -810,60 +1704,60 @@ ctx.fillStyle = "black";
     <input type="hidden" id="page" name="page" value="{{ page }}">
 </form>
 <div style="display:none">
-<select
-        id="subject"
+    <select
+            id="subject"
 
-        onchange="determines(this.options[this.selectedIndex])"
-        class="selectpicker"
-        data-libe-search="true"
->
-    {% for subject in subject_selected_list %}
-    <option
-
-            id="subject_"+i
-            name="options"
-            type="hidden"
-            value={{ subject.id }}
-            value2={{ subject.count }}
-            value3={{ subject.day1 }}
-            value4={{ subject.start_h1 }}
-            value5={{ subject.start_m1 }}
-            value6={{ subject.fin_h1 }}
-            value7={{ subject.fin_m1 }}
-            value8={{ subject.day2 }}
-            value9={{ subject.start_h2 }}
-            value10={{ subject.start_m2 }}
-            value11={{ subject.fin_h2 }}
-            value12={{ subject.fin_m2 }}
-            value13={{ subject.day3 }}
-            value14={{ subject.start_h3 }}
-            value15={{ subject.start_m3 }}
-            value16={{ subject.fin_h3 }}
-            value17={{ subject.fin_m3 }}
-            value18={{ subject.day4 }}
-            value19={{ subject.start_h4 }}
-            value20={{ subject.start_m4 }}
-            value21={{ subject.fin_h4 }}
-            value22={{ subject.fin_m4 }}
-            value23='{{subject.name}}'
-            value24='{{ subject.professor1 }}'
-            value25='{{subject.code}}'
-
-
+            onchange="determines(this.options[this.selectedIndex])"
+            class="selectpicker"
+            data-libe-search="true"
     >
-    </option>
-    {% endfor %}
+        {% for subject in subject_selected_list %}
+        <option
 
-</select>
+                id="subject_"+i
+                name="options"
+                type="hidden"
+                value={{ subject.id }}
+                value2={{ subject.count }}
+                value3={{ subject.day1 }}
+                value4={{ subject.start_h1 }}
+                value5={{ subject.start_m1 }}
+                value6={{ subject.fin_h1 }}
+                value7={{ subject.fin_m1 }}
+                value8={{ subject.day2 }}
+                value9={{ subject.start_h2 }}
+                value10={{ subject.start_m2 }}
+                value11={{ subject.fin_h2 }}
+                value12={{ subject.fin_m2 }}
+                value13={{ subject.day3 }}
+                value14={{ subject.start_h3 }}
+                value15={{ subject.start_m3 }}
+                value16={{ subject.fin_h3 }}
+                value17={{ subject.fin_m3 }}
+                value18={{ subject.day4 }}
+                value19={{ subject.start_h4 }}
+                value20={{ subject.start_m4 }}
+                value21={{ subject.fin_h4 }}
+                value22={{ subject.fin_m4 }}
+                value23='{{subject.name}}'
+                value24='{{ subject.professor1 }}'
+                value25='{{subject.code}}'
+
+
+        >
+        </option>
+        {% endfor %}
+
+    </select>
 </div>
 <div id=bottom_design>
-           학사편람 바로보기->  <a class="bottom_text" href="https://college.gist.ac.kr/college/sub03_01_05_10_09.do">https://college.gist.ac.kr/college/sub03_01_05_10_09.do</a>
-     <div id="login_copyright1">
-            Made by. MOP(이주찬, 이준명, 김여원, 김소정)
-        </div>
+    학사편람 바로보기->  <a class="bottom_text" href="https://college.gist.ac.kr/college/sub03_01_05_10_09.do">https://college.gist.ac.kr/college/sub03_01_05_10_09.do</a>
+    <div id="login_copyright1">
+        Made by. MOP(이주찬, 이준명, 김여원, 김소정)
+    </div>
     <div id="login_copyright2">
-            Copyright © 주찬쓰 Corp. All Rights Reserved.
-        </div>
+        Copyright © 주찬쓰 Corp. All Rights Reserved.
+    </div>
 </div>
 </body>
 
