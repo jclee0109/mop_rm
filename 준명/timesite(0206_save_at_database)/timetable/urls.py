@@ -4,7 +4,7 @@ from . import views
 app_name = 'timetable'
 
 urlpatterns = [
-    path('', views.main, name = 'main'),
+    path('', views.index, name = 'index'),
     path('<int:user_id>/',views.mytable, name = 'mytable'),
     path('add/<int:subject_id>', views.add, name='add'),
     path('del/<int:subject_id>', views.delete, name='del'),

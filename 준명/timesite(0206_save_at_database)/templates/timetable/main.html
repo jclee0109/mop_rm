@@ -7,9 +7,18 @@
     <title>MAIN</title>
     <!--   <link rel="stylesheet" type="text/css" href="{% static 'style_table.css' %}" />-->
     <style>
+    @font-face { font-family: 'NanumBarunGothic';
+src: url('/fonts/NanumBarunGothic.eot');
+src: url('/fonts/NanumBarunGothic.eot') format('embedded-opentype'),
+url('/fonts/NanumBarunGothic.woff') format('woff');}
+
     @media  only screen and (min-width:650px) and (max-width:1024px) {
+    #table2 { position:relate!important;}
 #outer_btn_right { display: none; }
 #table2 { display: none; }
+#myCanvas1{
+position: absolute;
+}
 #myCanvas2{
 display: none;
     }
@@ -77,7 +86,7 @@ border: 0px;
 #days{
 font-size: 20px;
 font-weight:500;
-
+font-family:'NanumBarunGothic';
   border-bottom: 1px solid #444444;
 }
 #subject_table{
@@ -97,6 +106,7 @@ font-size: 12px;
   padding-top: 7px;
   height:20px;
   transition: all 0.2s;
+
 }
 #subject_table1_1{
  display:inline;
@@ -315,9 +325,13 @@ width:297px!important;
     <style >
     @media  only screen and  (min-width:1024px) {
     #table2 { display: none; }
+    #table1 { position:relate!important;}
     #myCanvas2{
 display: none;
-    }
+    }#myCanvas1{
+position: absolute;
+}
+
     #light_down{
     display:none;
     }
@@ -645,10 +659,13 @@ i{display:none;}
 
 @media  only screen and (max-width:650px) {
 #table1 { display: none; }
-#myCanvas{
+#table2 { position:relate!important;}
+#myCanvas1{
 display: none;
 }
-
+#myCanvas2{
+position: absolute;
+}
 #outer_btn_right { display: none; }
 
 body{
@@ -678,7 +695,7 @@ padding: 10px;
 
 
   display: grid;
-  grid-template-columns: 1fr 85px;
+  grid-template-columns: 1fr 55px;
 }
 table {
    border: 0.1px solid #444444;
@@ -753,7 +770,7 @@ text-align: left;
 }
 #subject_table3{
 font-size: 5px;
-padding-left: 30px;
+padding-left: 40px;
 align: right;
  display:inline;
 }
@@ -772,10 +789,11 @@ margin:0 0.3em 0.3em 0;
 border-radius:5px;
 box-sizing: border-box;
 font-family:'Roboto',sans-serif;
-font-weight:1000;
+font-weight:500;
 color:#57af4c;
 text-align:center;
 transition: all 0.2s;
+font-size: 11px;
 }
 
 #button_subject_table:hover{
@@ -807,7 +825,7 @@ padding-bottom: 10;
 
 #sum{
 color:#57af4c;
-font-size: 3px;
+font-size: 5px;
 }
 #result_bag1{
 font-size: 5px;
@@ -959,7 +977,7 @@ display:none;
       }
 
       function clean() {
-        var ctx = document.getElementById("myCanvas").getContext("2d");
+        var ctx = document.getElementById("myCanvas1").getContext("2d");
 
         ctx.fillStyle = "rgb(232, 232, 245)";
         ctx.clearRect(0, 0, 600, 480);
@@ -1003,7 +1021,10 @@ display:none;
          pro=$("#subject option:selected").attr("value24");
           code=$("#subject option:selected").attr("value25");
 
-        var ctx = document.getElementById("myCanvas").getContext("2d");
+        var ctx = document.getElementById("myCanvas1").getContext("2d");
+        ctx.mozImageSmoothingEnabled = false;
+        ctx.imageSmoothingEnabled = false;
+        ctx.scale(4, 4);
 
         if (day1 === "월") {
           day1= 1;
@@ -1061,51 +1082,63 @@ display:none;
 
 
         ctx.fillStyle = color;
-        ctx.font = '12px Arial';
+        ctx.font = '12px NanumBarunGothic';
         ctx.fillRect(100 * day1, 20 * s_time+20, 100, 20 * (f_time - s_time));
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "white";
         ctx.fillText(name,100 * day1+5, 20 * s_time+46,90);
-        ctx.fillText("  - "+pro,100 * day1+5, 20 * s_time+58,90);
+
         ctx.fillText(code,100 * day1+5, 20 * s_time+32,90);
+        ctx.font = '10px NanumBarunGothic';
+        ctx.fillText("  - "+pro,100 * day1+5, 20 * s_time+58,90);
 
         {
           s_time = (start_timeh2 - 9) * 2 + start_timem2 / 30 + 1;
           f_time = (finish_timeh2 - 9) * 2 + finish_timem2 / 30 + 1;
           ctx.fillStyle = color;
           ctx.fillRect(100 * day2, 20 * s_time+20, 100, 20 * (f_time - s_time));
-        ctx.fillStyle = "black";
+          ctx.font = '12px NanumBarunGothic';
+        ctx.fillStyle = "white";
         ctx.fillText(name,100 * day2+5, 20 * s_time+46,90);
+        ctx.font = '10px NanumBarunGothic';
         ctx.fillText("  - "+pro,100 * day2+5, 20 * s_time+58,90);
+        ctx.font = '12px NanumBarunGothic';
         ctx.fillText(code,100 * day2+5, 20 * s_time+32,90);
         }
         {
           s_time = (start_timeh3 - 9) * 2 + start_timem3 / 30 + 1;
 
           f_time = (finish_timeh3 - 9) * 2 + finish_timem3 / 30 + 1;
-
+ctx.font = '12px Arial';
 
           ctx.fillStyle = color;
           ctx.fillRect(100 * day3, 20 * s_time+20, 100, 20 * (f_time - s_time));
-          ctx.fillStyle = "black";
+          ctx.fillStyle = "white";
         ctx.fillText(name,100 * day3+5, 20 * s_time+46,90);
+        ctx.font = '10px NanumBarunGothic';
         ctx.fillText("  - "+pro,100 * day3+5, 20 * s_time+58,90);
+        ctx.font = '12px NanumBarunGothic';
         ctx.fillText(code,100 * day3+5, 20 * s_time+32,90);
         }
         {
           s_time = (start_timeh4 - 9) * 2 + start_timem4 / 30 + 1;
 
           f_time = (finish_timeh4 - 9) * 2 + finish_timem4 / 30 + 1;
-
+ctx.font = '12px Arial';
           ctx.fillStyle = color;
           ctx.fillRect(100 * day4, 20 * s_time+20, 100, 20 * (f_time - s_time));
-          ctx.fillStyle = "black";
+          ctx.fillStyle = "white";
         ctx.fillText(name,100 * day4+5, 20 * s_time+46,90);
+        ctx.font = '10px NanumBarunGothic';
         ctx.fillText("  - "+pro,100 * day4+5, 20 * s_time+58,90);
+        ctx.font = '12px NanumBarunGothic';
         ctx.fillText(code,100 * day4+5, 20 * s_time+32,90);
         }
+        ctx.scale(0.25, 0.25);
 <!--        여기부터 2번-->
         var ctx2 = document.getElementById("myCanvas2").getContext("2d");
-
+        ctx2.mozImageSmoothingEnabled = false;
+        ctx2.fontSmoothingEnabled = false;
+        ctx2.scale(4, 4);
         s_time = 0;
         f_time = 0;
 
@@ -1115,50 +1148,54 @@ display:none;
         f_time = (finish_timeh1 - 9) * 2 + finish_timem1 / 30 + 1;
 
         ctx2.fillStyle = color;
-        ctx2.font = '6px Arial';
+        ctx2.font = '6px NanumBarunGothic';
         ctx2.fillRect(50 * day1, 10 * s_time+10, 50, 10 * (f_time - s_time));
-        ctx2.fillStyle = "black";
+        ctx2.fillStyle = "white";
         ctx2.fillText(name,50 * day1+2, 10 * s_time+23,45);
+        ctx2.font = '4px NanumBarunGothic';
         ctx2.fillText("  - "+pro,50 * day1+2, 10 * s_time+29,45);
+        ctx2.font = '6px NanumBarunGothic';
         ctx2.fillText(code,50 * day1+2, 10 * s_time+16,45);
 
         s_time = (start_timeh2 - 9) * 2 + start_timem2 / 30 + 1;
         f_time = (finish_timeh2 - 9) * 2 + finish_timem2 / 30 + 1;
 
         ctx2.fillStyle = color;
-        ctx2.font = '6px Arial';
+        ctx2.font = '6px NanumBarunGothic';
         ctx2.fillRect(50 * day2, 10 * s_time+10, 50, 10 * (f_time - s_time));
-        ctx2.fillStyle = "black";
+        ctx2.fillStyle = "white";
         ctx2.fillText(name,50 * day2+2, 10 * s_time+23,45);
+        ctx2.font = '4px NanumBarunGothic';
         ctx2.fillText("  - "+pro,50 * day2+2, 10 * s_time+29,45);
+        ctx2.font = '6px NanumBarunGothic';
         ctx2.fillText(code,50 * day2+2, 10 * s_time+16,45);
 
         s_time = (start_timeh3 - 9) * 2 + start_timem3 / 30 + 1;
         f_time = (finish_timeh3 - 9) * 2 + finish_timem3 / 30 + 1;
 
         ctx2.fillStyle = color;
-        ctx2.font = '6px Arial';
+        ctx2.font = '6px NanumBarunGothic';
         ctx2.fillRect(50 * day3, 10 * s_time+10, 50, 10 * (f_time - s_time));
-        ctx2.fillStyle = "black";
+        ctx2.fillStyle = "white";
         ctx2.fillText(name,50 * day3+2, 10 * s_time+23,45);
+        ctx2.font = '4px NanumBarunGothic';
         ctx2.fillText("  - "+pro,50 * day3+2, 10 * s_time+29,45);
+        ctx2.font = '6px NanumBarunGothic';
         ctx2.fillText(code,50 * day3+2, 10 * s_time+16,45);
 
         s_time = (start_timeh4 - 9) * 2 + start_timem4 / 30 + 1;
         f_time = (finish_timeh4 - 9) * 2 + finish_timem4 / 30 + 1;
 
         ctx2.fillStyle = color;
-        ctx2.font = '6px Arial';
+        ctx2.font = '6px NanumBarunGothic';
         ctx2.fillRect(50 * day4, 10 * s_time+10, 50, 10 * (f_time - s_time));
-        ctx2.fillStyle = "black";
+        ctx2.fillStyle = "white";
         ctx2.fillText(name,50 * day4+2, 10 * s_time+23,45);
+        ctx2.font = '4px NanumBarunGothic';
         ctx2.fillText("  - "+pro,50 * day4+2, 10 * s_time+29,45);
+        ctx2.font = '6px NanumBarunGothic';
         ctx2.fillText(code,50 * day4+2, 10 * s_time+16,45);
-
-
-
-
-
+        ctx2.scale(1/4, 1/4);
         bag_counts++;
       }
     </script>
@@ -1185,19 +1222,13 @@ display:none;
         <div>&nbsp</div>
         <div id="login_back">
             <canvas
-                    id="myCanvas"
-                    width="600"
-                    height="560"
+                    id="myCanvas1"
+                    width="2400px" height="2240px"
+                    style="width : 600px; height : 560px"
                     style="position: absolute"
             >
             </canvas>
-            <canvas
-                    id="myCanvas2"
-                    width="300"
-                    height="280"
-                    style="position: absolute"
-            >
-            </canvas>
+
 
             <table id="table1" width="600" style="color: #121212 ">
                 <tr >
@@ -1209,7 +1240,7 @@ display:none;
                     <th id="days" >Fri</th>
                 </tr>
                 <tr>
-                    <th >9:00</th>
+                    <th >09:00</th>
                     <td ></td>
                     <td ></td>
                     <td ></td>
@@ -1239,63 +1270,63 @@ display:none;
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >1:00</th>
+                <th >13:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >2:00</th>
+                <th >14:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >3:00</th>
+                <th >15:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >4:00</th>
+                <th >16:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >5:00</th>
+                <th >17:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >6:00</th>
+                <th >18:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >7:00</th>
+                <th >19:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >8:00</th>
+                <th >20:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >9:00</th>
+                <th >21:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
@@ -1303,6 +1334,14 @@ display:none;
                 <td ></td>
             </tr>
             </table>
+            <canvas
+                    id="myCanvas2"
+
+                    width="1200px" height="1120px"
+                    style="width : 300px; height : 280px"
+                    style="position: absolute"
+            >
+            </canvas>
             <table  id="table2"width="300" style="color: #121212 ">
                 <tr >
                     <th ></th>
@@ -1313,7 +1352,7 @@ display:none;
                     <th id="days" >Fri</th>
                 </tr>
                 <tr>
-                    <th >9:00</th>
+                    <th >09:00</th>
                     <td ></td>
                     <td ></td>
                     <td ></td>
@@ -1343,63 +1382,63 @@ display:none;
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >1:00</th>
+                <th >13:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >2:00</th>
+                <th >14:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >3:00</th>
+                <th >15:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >4:00</th>
+                <th >16:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >5:00</th>
+                <th >17:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >6:00</th>
+                <th >18:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >7:00</th>
+                <th >19:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >8:00</th>
+                <th >20:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
                 <td ></td>
             </tr><tr>
-                <th >9:00</th>
+                <th >21:00</th>
                 <td ></td>
                 <td ></td>
                 <td ></td>
@@ -1408,7 +1447,7 @@ display:none;
             </tr>
             </table>
             <!--테이블 생성 끝-->
-            <div style=" text-indent:85%;">
+            <div style="  text-align: right;">
                 <div id="sum">총 {{ sum }}  학점</div>
             </div>
 
@@ -1479,120 +1518,116 @@ display:none;
                 </table>
             </div>
             <div id="light_down">
-                 <div id="result">검색창</div>
+                <div id="result">검색창</div>
+                <form method="get" action="{% url 'timetable:mytable' request.user.id %}">
+                <select id= "department" name = "department" >
+                    <option disabled selected value>---select department----</option>
+                    <option value="생명과학전공">생명과학전공</option>
+                    <option value="화학전공">화학전공</option>
+                    <option value="전기전자컴퓨터전공">전기전자컴퓨터전공</option>
+                    <option value="문화기술 부전공">문화기술 부전공</option>
+                    <option value="지구환경공학전공">지구환경공학전공</option>
+                    <option value="에너지부전공">에너지부전공</option>
+                    <option value="기초교육학부">기초교육학부</option>
+                    <option value="지능로봇 부전공">지능로봇 부전공</option>
+                    <option value="신소재공학전공">신소재공학전공</option>
+                    <option value="기계공학전공">기계공학전공</option>
+                    <option value="의생명공학 부전공">의생명공학 부전공</option>
+                    <option value="수학부전공">수학부전공</option>
+                    <option value="물리전공">물리전공</option>
+                    <option value="대학공통">대학공통</option>
+                </select>
+                <select id= "day" name = "day" >
+                    <option disabled selected value>---select day----</option>
+                    <option value="월">월</option>
+                    <option value="화">화</option>
+                    <option value="수">수</option>
+                    <option value="목">목</option>
+                    <option value="금">금</option>
+                </select>
+                <select id= "time" name = "time" >
+                    <option disabled selected value>---select time----</option>
+                    <option value="09:00">09:00~10:30</option>
+                    <option value="10:30">10:30~12:00</option>
+                    <option value="13:00">13:00~14:30</option>
+                    <option value="14:30">14:30~16:00</option>
+                    <option value="16:00">16:00~17:30</option>
+                </select>
 
+                    <input class="form-control py-2 border-right-0 border" type="search" name="name" placeholder="Subject name contains..." />
 
-                        <select id= "department" name = "department" >
-                            <option disabled selected value>---select department----</option>
-                            <option value="생명과학전공">생명과학전공</option>
-                            <option value="화학전공">화학전공</option>
-                            <option value="전기전자컴퓨터전공">전기전자컴퓨터전공</option>
-                            <option value="문화기술 부전공">문화기술 부전공</option>
-                            <option value="지구환경공학전공">지구환경공학전공</option>
-                            <option value="에너지부전공">에너지부전공</option>
-                            <option value="기초교육학부">기초교육학부</option>
-                            <option value="지능로봇 부전공">지능로봇 부전공</option>
-                            <option value="신소재공학전공">신소재공학전공</option>
-                            <option value="기계공학전공">기계공학전공</option>
-                            <option value="의생명공학 부전공">의생명공학 부전공</option>
-                            <option value="수학부전공">수학부전공</option>
-                            <option value="물리전공">물리전공</option>
-                            <option value="대학공통">대학공통</option>
-                        </select>
-                        <select id= "day" name = "day" >
-                            <option disabled selected value>---select day----</option>
-                            <option value="월">월</option>
-                            <option value="화">화</option>
-                            <option value="수">수</option>
-                            <option value="목">목</option>
-                            <option value="금">금</option>
-                        </select>
-                        <select id= "time" name = "time" >
-                            <option disabled selected value>---select time----</option>
-                            <option value="9:00">9:00~10:30</option>
-                            <option value="10:30">10:30~12:00</option>
-                            <option value="13:00">13:00~14:30</option>
-                            <option value="14:30">14:30~16:00</option>
-                            <option value="16:00">16:00~17:30</option>
-                        </select>
-                    <form method="get" action="{% url 'timetable:mytable' request.user.id %}">
+                    <input class="search2_1" type="search" name="professor" placeholder="Professor name..." />
 
+                    <input class="search2_1" type="search" name="code" placeholder="Subject code(ex : GS1001, GS1002 ...)" />
 
-                                    <input class="form-control py-2 border-right-0 border" type="search" name="name" placeholder="Subject name contains..." />
+                    <button class="btn btn-outline-secondary" id="btn_search" type="submit">찾기</button>
 
-                                    <input class="search2_1" type="search" name="professor" placeholder="Professor name..." />
-
-                                    <input class="search2_1" type="search" name="code" placeholder="Subject code(ex : GS1001, GS1002 ...)" />
-
-
-                            <button class="btn btn-outline-secondary" id="btn_search" type="submit">찾기</button>
-
-
-                    </form>
+                </form>
 
 
 
-            <!-- checkbox -->
-            <div class="container my-3">
-                <div class = "table">
-                    <div id="result_back">
+                <!-- checkbox -->
+                <div class="container my-3">
+                    <div class = "table">
+                        <div id="result_back">
 
-                        <div id="result">수업목록 </div></div>
-                    <div class="table_body">
-                        {% if subject_list %}
-                        {% for subject in subject_list %}
-                        <div class="text-center">
-                            <div class = "text-left">
-                                <div id="subject_table">
-                                    <div id="subject_table1" class="subject_button">
-                                        <div id="subject_table1_1">
-                                            {{ subject.id }}
-                                            {{ subject.name }} - {{ subject.professor1 }}
+                            <div id="result">수업목록 </div></div>
+                        <div class="table_body">
+                            {% if subject_list %}
+                            {% for subject in subject_list %}
+                            <div class="text-center">
+                                <div class = "text-left">
+                                    <div id="subject_table">
+                                        <div id="subject_table1" class="subject_button">
+                                            <div id="subject_table1_1">
+                                                {{ subject.id }}
+                                                {{ subject.name }} - {{ subject.professor1 }}
+                                            </div>
+                                            <div id="subject_table3">
+
+                                                <button method="get" id="button_subject_table" class="btn btn-outline-secondary" > <a href="{% url 'timetable:add' subject.id %}"> ADD </a> </button></div>
                                         </div>
-                                        <div id="subject_table3">
+                                        <div id="subject_table2">
+                                            {% if subject.count == 1 %}
+                                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                                            {% elif subject.count == 2 %}
+                                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                                            {% elif subject.count == 3 %}
+                                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                                            / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
+                                            {% elif subject.count == 4 %}
+                                            / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
+                                            / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
+                                            / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
+                                            / {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4 }}
+                                            {% endif %}
+                                            / {{ subject.credit }} 학점
 
-                                            <button method="get" id="button_subject_table" class="btn btn-outline-secondary" > <a href="{% url 'timetable:add' subject.id %}"> ADD </a> </button></div>
+                                        </div>
                                     </div>
-                                    <div id="subject_table2">
-                                        {% if subject.count == 1 %}
-                                        / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
-                                        {% elif subject.count == 2 %}
-                                        / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
-                                        / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
-                                        {% elif subject.count == 3 %}
-                                        / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
-                                        / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
-                                        / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
-                                        {% elif subject.count == 4 %}
-                                        / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
-                                        / {{ subject.day2 }} {{ subject.start_time2 }}~{{ subject.finish_time2 }}
-                                        / {{ subject.day3 }} {{ subject.start_time3 }}~{{ subject.finish_time3 }}
-                                        / {{ subject.day4 }} {{ subject.start_time4 }}~{{ subject.finish_time4 }}
-                                        {% endif %}
-                                        / {{ subject.credit }} 학점
 
-                                    </div>
                                 </div>
-
                             </div>
+                            {% endfor %}
+                            {% else %}
+                            <div>
+                                <div colspan="3">강의가 없습니다.</div>
+                            </div>
+                            {% endif %}
                         </div>
-                        {% endfor %}
-                        {% else %}
-                        <div>
-                            <div colspan="3">강의가 없습니다.</div>
-                        </div>
-                        {% endif %}
                     </div>
                 </div>
-            </div>
             </div>
 
         </div>
         <div id="outer_btn_right">
             <div class="form-group">
-                <div id="result1">검색창 </div>
-                <div id="select_box">
-                <select id= "department" name = "department" >
+                <form method="get" action="{% url 'timetable:mytable' request.user.id %}">
+                    <div id="result1">검색창 </div>
+                    <div id="select_box">
+                        <select name = "department" >
                             <option disabled selected value>---select department----</option>
                             <option value="생명과학전공">생명과학전공</option>
                             <option value="화학전공">화학전공</option>
@@ -1609,7 +1644,7 @@ display:none;
                             <option value="물리전공">물리전공</option>
                             <option value="대학공통">대학공통</option>
                         </select>
-                        <select id= "day" name = "day" >
+                        <select name = "day" >
                             <option disabled selected value>---select day----</option>
                             <option value="월">월</option>
                             <option value="화">화</option>
@@ -1617,9 +1652,9 @@ display:none;
                             <option value="목">목</option>
                             <option value="금">금</option>
                         </select>
-                        <select id= "time" name = "time" >
+                        <select name = "time" >
                             <option disabled selected value>---select time----</option>
-                            <option value="9:00">9:00~10:30</option>
+                            <option value="09:00">09:00~10:30</option>
                             <option value="10:30">10:30~12:00</option>
                             <option value="13:00">13:00~14:30</option>
                             <option value="14:30">14:30~16:00</option>
@@ -1628,21 +1663,21 @@ display:none;
                     </div>
 
 
-                    <form method="get" action="{% url 'timetable:mytable' request.user.id %}">
 
 
-                                    <input class="form-control py-2 border-right-0 border" type="search" name="name" placeholder="Subject name contains..." />
 
-                            <div class="search_2">
-                                    <input class="search_2_1" type="search" professor placeholder="Professor name..." />
-                                     <input class="search_2_1" type="search" name="code" placeholder="Subject code(ex : GS1001, GS1002 ...)" />
+                    <input class="form-control py-2 border-right-0 border" type="search" name="name" placeholder="Subject name contains..." />
+
+                    <div class="search_2">
+                        <input class="search_2_1" type="search" professor placeholder="Professor name..." />
+                        <input class="search_2_1" type="search" name="code" placeholder="Subject code(ex : GS1001, GS1002 ...)" />
 
 
-                        </div>
-                        <button class="btn btn-outline-secondary" id="btn_search" type="submit">찾기</button>
+                    </div>
+                    <button class="btn btn-outline-secondary" id="btn_search" type="submit">찾기</button>
 
-                    </form>
-                </div>
+                </form>
+            </div>
 
             <!-- checkbox -->
             <div class="container my-3">
@@ -1708,60 +1743,64 @@ display:none;
     <input type="hidden" id="page" name="page" value="{{ page }}">
 </form>
 <div style="display:none">
-<select
-        id="subject"
+    <select
+            id="subject"
 
-        onchange="determines(this.options[this.selectedIndex])"
-        class="selectpicker"
-        data-libe-search="true"
->
-    {% for subject in subject_selected_list %}
-    <option
-
-            id="subject_"+i
-            name="options"
-            type="hidden"
-            value={{ subject.id }}
-            value2={{ subject.count }}
-            value3={{ subject.day1 }}
-            value4={{ subject.start_h1 }}
-            value5={{ subject.start_m1 }}
-            value6={{ subject.fin_h1 }}
-            value7={{ subject.fin_m1 }}
-            value8={{ subject.day2 }}
-            value9={{ subject.start_h2 }}
-            value10={{ subject.start_m2 }}
-            value11={{ subject.fin_h2 }}
-            value12={{ subject.fin_m2 }}
-            value13={{ subject.day3 }}
-            value14={{ subject.start_h3 }}
-            value15={{ subject.start_m3 }}
-            value16={{ subject.fin_h3 }}
-            value17={{ subject.fin_m3 }}
-            value18={{ subject.day4 }}
-            value19={{ subject.start_h4 }}
-            value20={{ subject.start_m4 }}
-            value21={{ subject.fin_h4 }}
-            value22={{ subject.fin_m4 }}
-            value23='{{subject.name}}'
-            value24='{{ subject.professor1 }}'
-            value25='{{subject.code}}'
-
-
+            onchange="determines(this.options[this.selectedIndex])"
+            class="selectpicker"
+            data-libe-search="true"
     >
-    </option>
-    {% endfor %}
+        {% for subject in subject_selected_list %}
+        <option
 
-</select>
+                id="subject_"+i
+                name="options"
+                type="hidden"
+                value={{ subject.id }}
+                value2={{ subject.count }}
+                value3={{ subject.day1 }}
+                value4={{ subject.start_h1 }}
+                value5={{ subject.start_m1 }}
+                value6={{ subject.fin_h1 }}
+                value7={{ subject.fin_m1 }}
+                value8={{ subject.day2 }}
+                value9={{ subject.start_h2 }}
+                value10={{ subject.start_m2 }}
+                value11={{ subject.fin_h2 }}
+                value12={{ subject.fin_m2 }}
+                value13={{ subject.day3 }}
+                value14={{ subject.start_h3 }}
+                value15={{ subject.start_m3 }}
+                value16={{ subject.fin_h3 }}
+                value17={{ subject.fin_m3 }}
+                value18={{ subject.day4 }}
+                value19={{ subject.start_h4 }}
+                value20={{ subject.start_m4 }}
+                value21={{ subject.fin_h4 }}
+                value22={{ subject.fin_m4 }}
+                value23='{{subject.name}}'
+                value24='{{ subject.professor1 }}'
+                value25='{{subject.code}}'
+
+
+        >
+        </option>
+        {% endfor %}
+
+    </select>
 </div>
 <div id=bottom_design>
-           학사편람 바로보기->  <a class="bottom_text" href="https://college.gist.ac.kr/college/sub03_01_05_10_09.do">https://college.gist.ac.kr/college/sub03_01_05_10_09.do</a>
-     <div id="login_copyright1">
-            Made by. MOP(이주찬, 이준명, 김여원, 김소정)
-        </div>
+    학사편람 바로보기->  <a class="bottom_text" href="https://college.gist.ac.kr/college/sub03_01_05_10_09.do">https://college.gist.ac.kr/college/sub03_01_05_10_09.do</a>
+    <div id="login_copyright1">
+        Made by. MOP(이주찬, 이준명, 김여원, 김소정)
+    </div>
+    <div id="login_copyright1">
+        Contact : 010-7665-3393 / Mail = jclee0109@gist.ac.kr
+    </div>
+
     <div id="login_copyright2">
-            Copyright © 주찬쓰 Corp. All Rights Reserved.
-        </div>
+        Copyright © 주찬쓰 Corp. All Rights Reserved.
+    </div>
 </div>
 </body>
 
