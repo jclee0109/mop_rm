@@ -235,7 +235,9 @@ height: 350px;
 }
 #bottom_design{
  background-color: #a7a7a7;
+
     padding:70px;
+     padding-top:5px;
     text-align: center;
     color:white;
     font-size:15px;
@@ -572,7 +574,9 @@ height: 500px;
 }
 #bottom_design{
  background-color: #a7a7a7;
+
     padding:70px;
+     padding-top:5px;
     text-align: center;
     color:white;
     font-size:15px;
@@ -885,6 +889,7 @@ font-size: 6px;
 #bottom_design{
  background-color: #a7a7a7;
     padding:35px;
+     padding-top:5px;
     text-align: center;
     color:white;
     font-size:7px;
@@ -943,6 +948,7 @@ input[type="search"] {
 select{
 display:none;
 }
+
 select:hover{
 padding: 3px;
 background-color:white;
@@ -958,7 +964,6 @@ display:none;
 }
 }
 </style>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
       var bag_counts = 0;
@@ -1202,7 +1207,6 @@ ctx.font = '12px Arial';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
-
 <body>
 {% include "navbar.html" %}
 <script src="{% static 'jquery-3.5.1.min.js' %}"></script>
@@ -1484,9 +1488,7 @@ ctx.font = '12px Arial';
                         <td class = "text-left">
                             <div  class="subject_button2">
                                 <div id="result_bag1">
-
                                     {{ subject.name }} - {{ subject.professor1 }}
-                                    {{ value|linebreaks }}
                                     {% if subject.count == 1 %}
                                     / {{ subject.day1 }} {{ subject.start_time1 }}~{{ subject.finish_time1 }}
                                     {% elif subject.count == 2 %}
@@ -1662,14 +1664,10 @@ ctx.font = '12px Arial';
                         </select>
                     </div>
 
-
-
-
-
                     <input class="form-control py-2 border-right-0 border" type="search" name="name" placeholder="Subject name contains..." />
 
                     <div class="search_2">
-                        <input class="search_2_1" type="search" professor placeholder="Professor name..." />
+                        <input class="search_2_1" type="search" name="professor" placeholder="Professor name..." />
                         <input class="search_2_1" type="search" name="code" placeholder="Subject code(ex : GS1001, GS1002 ...)" />
 
 
@@ -1790,12 +1788,17 @@ ctx.font = '12px Arial';
     </select>
 </div>
 <div id=bottom_design>
+    <div style="color:black; font-size:10px; text-align:left;margin-bottom:20px;">
+    <div>* 주의사항</div>
+    <div>1. 서버 관리로 인해 새벽에 잠시 실행이 불가할 수 있습니다</div>
+    <div>2. 아이폰,아이패드에서는 실행이 제대로 이루어지지 않을 수 있습니다</div>
+    <div>3. 사파리에서는 실행이 제대로 이루어지지 않을 수 있습니다</div></div>
     학사편람 바로보기->  <a class="bottom_text" href="https://college.gist.ac.kr/college/sub03_01_05_10_09.do">https://college.gist.ac.kr/college/sub03_01_05_10_09.do</a>
     <div id="login_copyright1">
         Made by. MOP(이주찬, 이준명, 김여원, 김소정)
     </div>
     <div id="login_copyright1">
-        Contact : 010-7665-3393 / Mail = jclee0109@gist.ac.kr
+        Contact : 010-7665-3393 / Mail : jclee0109@gist.ac.kr
     </div>
 
     <div id="login_copyright2">
